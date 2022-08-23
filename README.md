@@ -1,34 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# OPGG Frontend Test
 
-## Getting Started
+## 사용 기술
 
-First, run the development server:
+next.js, typescript, styled-component, recoil
 
-```bash
+## 디자인 패턴
+
+## 실행
+
+```
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## **상세 요구사항**
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+[ ] 검색시 검색한 소환사 정보가 노출되어야 하며, 검색창에는 op.gg와 같이 최근 검색 리스트가 노출되어야 합니다.
+[ ] 매치 리스트 타입에 따라 필터링 되어야 합니다.
+[ ] 아이템에 mouse hover시 툴팁을 노출합니다.
+[ ] 과제에서 매치 더보기 기능은 제외합니다.
+[ ] 탭 선택에 따라 프리시즌과 7일간 랭크 승률을 보여주세요. (정렬기준: 플레이 게임 수)
+[ ] 25.9 / 15.8 / 14.1 == kills / assists / deaths
+[ ] KDA 공식 : kills + assists / deaths
+[ ] 색상표시기준
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- KDA
+  - 3.00:1 >= #2daf7f
+  - 4.00:1 >= #1f8ecd
+  - 5.00:1 >= #e19205
+- 승률
+  - 60% >= #c6443e
+- 평점
+  - 6.0 >= #e19205
