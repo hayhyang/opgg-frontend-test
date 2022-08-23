@@ -130,7 +130,7 @@ export interface ISummary {
 }
 
 export interface ISummoner {
-  ladderRank: { [key: string]: ILadderRank };
+  ladderRank: ILadderRank;
   leagues: ILeague[];
   level: number;
   name: string;
