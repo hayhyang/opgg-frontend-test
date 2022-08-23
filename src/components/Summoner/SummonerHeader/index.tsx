@@ -40,7 +40,9 @@ const SummonerHeader = ({
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  border-bottom: 1px solid #d8d8d8;
+`;
 
 const Inner = styled.div`
   max-width: 100rem;

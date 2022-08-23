@@ -1,20 +1,49 @@
+import { useState } from "react";
+import styled from "styled-components";
+import { useRouter } from "next/router";
+
 import { useRecoilState } from "recoil";
 import { openSearchState } from "recoil/state";
-import styled from "styled-components";
+
 import SearchOption from "./SearchOption";
+
+import Logo from "assets/icons/common/logo-gg.svg";
 
 const Search = () => {
   const [openSearch, setOpenSearchState] = useRecoilState(openSearchState);
+  const [searchValue, setSearchValue] = useState();
+  const router = useRouter();
 
   const handleFocusInput = () => {
     setOpenSearchState(true);
   };
+
+  const handleChangeValue = ({ target: { value } }: any) => {
+    setSearchValue(value);
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (searchValue) {
+      router.push(`/summoner/${searchValue}`);
+    }
+  };
+
   return (
     <Container>
-      <SearchBox>
-        <Input placeholder="소환사명,챔피언…" onFocus={handleFocusInput} />
-        <Button>{}</Button>
-      </SearchBox>
+      <form onSubmit={handleSubmit}>
+        <SearchBox>
+          <Input
+            placeholder="소환사명,챔피언…"
+            onFocus={handleFocusInput}
+            value={searchValue}
+            onChange={handleChangeValue}
+          />
+          <Button type="submit">
+            <Logo />
+          </Button>
+        </SearchBox>
+      </form>
       {openSearch && <SearchOption />}
     </Container>
   );
@@ -40,7 +69,7 @@ const SearchBox = styled.div`
   position: relative;
 `;
 
-const Input = styled.input`
+const Input = styled.input<any>`
   font-size: 12px;
   color: #727272;
   padding-left: 1.4rem;
@@ -52,10 +81,7 @@ const Button = styled.button`
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  svg {
-    width: 100%;
-    height: 13px;
-  }
+  justify-content: center;
 `;
 
 export default Search;

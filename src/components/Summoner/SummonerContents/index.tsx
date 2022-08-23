@@ -3,12 +3,17 @@ import styled from "styled-components";
 const SummonerContents = () => {
   return (
     <Container>
-      <Inner>SummonerContents</Inner>
+      <Inner>
+        <div></div>
+        <div></div>
+      </Inner>
     </Container>
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  padding-top: 10px;
+`;
 
 const Inner = styled.div`
   max-width: 102.4rem;
