@@ -1,4 +1,4 @@
-import { getPositionName, getWinningRate } from "lib/utils";
+import { getPositionIcon, getPositionName, getWinningRate } from "lib/utils";
 import styled from "styled-components";
 
 const Position = ({
@@ -11,9 +11,11 @@ const Position = ({
 }: any) => {
   const roleRate = getRoleRate(games);
 
+  console.log("getPositionIcon(position)", getPositionIcon(position));
+
   return (
     <Container>
-      {/* <Icon>{getPositionIcon(position)}</Icon> */}
+      <Icon>{getPositionIcon(position)}</Icon>
       <Metadata>
         <Name>{getPositionName(positionName)}</Name>
         <Rates>

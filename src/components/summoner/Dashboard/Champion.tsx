@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import Avatar from "components/common/Avatar";
 import { getKDA, getWinningRate } from "lib/utils";
+import { IMostChampion } from "types/types";
 
 const Champion = ({
   imageUrl,
@@ -12,7 +13,7 @@ const Champion = ({
   kills,
   deaths,
   assists,
-}: any) => {
+}: IMostChampion) => {
   const winninfRate = getWinningRate(wins, losses);
   const kda = getKDA(kills, assists, deaths);
 

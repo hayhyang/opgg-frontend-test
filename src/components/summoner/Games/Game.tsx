@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 import { getMatchDetailApi } from "pages/api/api";
 
-import { publicImages } from "lib/constants";
 import { returnBadge } from "lib/utils";
 import { ellipsis } from "styles/modules";
 
 import Avatar from "components/common/Avatar";
+import Image from "next/image";
 
 const MatchesGame = ({
   champion,
@@ -23,10 +23,10 @@ const MatchesGame = ({
   summonerName,
   tierRankShort,
 }: any) => {
-  const buildIconBlue = `${publicImages}/icon-buildblue-p.png`;
-  const buildIconRed = `${publicImages}/icon-buildred-p.png`;
-  const arrowBlue = `${publicImages}/icon-viewdetail-blue.png`;
-  const arrowRed = `${publicImages}/icon-viewdetail-red.png`;
+  const buildIconBlue = `/images/icon-buildblue-p.png`;
+  const buildIconRed = `/images/icon-buildred-p.png`;
+  const arrowBlue = `/images/icon-viewdetail-blue.png`;
+  const arrowRed = `/images/icon-viewdetail-red.png`;
 
   const [teams, setTeams] = useState([]);
   const [itemList, setItemList] = useState([]);
@@ -61,14 +61,14 @@ const MatchesGame = ({
             <ChampionItems>
               {spells.map((el: any, i: number) => (
                 <ChampionItem key={i}>
-                  {/* <Image src={el.imageUrl} alt="spell" size="2.2rem" /> */}
+                  <Image src={el.imageUrl} width="22" height="22" alt="spell" />
                 </ChampionItem>
               ))}
             </ChampionItems>
             <Peaks>
               {peak.map((el: any, i: number) => (
                 <Peak key={i}>
-                  {/* <Image src={el} alt="items" size="2.2rem" /> */}
+                  <Image src={el} width="22" height="22" alt="peak" />
                 </Peak>
               ))}
               {/* <Rune></Rune> */}
@@ -121,18 +121,21 @@ const MatchesGame = ({
             <ItemImages>
               {items.map((el: any, i: number) => (
                 <Item key={i}>
-                  {/* <Image src={el.imageUrl} alt="아이템" size="2.2rem" /> */}
+                  <Image src={el.imageUrl} width="22" height="22" alt="item" />
                 </Item>
               ))}
             </ItemImages>
             <Ward>
-              <Item>{/* <Image src="" alt="아이템" size="2.2rem" /> */}</Item>
+              <Item>
+                <Image src="" width="22" height="22" alt="item" />
+              </Item>
               <button>
-                {/* <Image
+                <Image
                   src={isWin ? buildIconBlue : buildIconRed}
-                  alt="와드"
-                  size="2.2rem"
-                /> */}
+                  width="22"
+                  height="22"
+                  alt="ward"
+                />
               </button>
             </Ward>
           </ItemList>
@@ -146,13 +149,12 @@ const MatchesGame = ({
             <Team key={idx}>
               {el?.players?.map((e: any, i: number) => (
                 <li key={i}>
-                  <ChampionAvatar>
-                    {/* <Image
-                      src={champion?.imageUrl}
-                      alt={e.summonerName}
-                      size="1.6rem"
-                    /> */}
-                  </ChampionAvatar>
+                  <Image
+                    src={champion?.imageUrl}
+                    width="16"
+                    height="16"
+                    alt={e.summonerName}
+                  />
                   <ChampionName
                     className={summonerName === e.summonerName ? "on" : ""}
                   >
@@ -392,7 +394,6 @@ const Team = styled.div`
   }
 `;
 
-const ChampionAvatar = styled.span``;
 const ChampionName = styled.span`
   margin-left: 3px;
   width: 54px;

@@ -1,5 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
+
 import SummonerLayout from "components/layout/SummonerLayout";
+
 import Profile from "components/summoner/Profile";
 import Leagues from "components/summoner/Leagues";
 import Rankings from "components/summoner/Rankings";

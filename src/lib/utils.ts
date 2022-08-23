@@ -1,3 +1,9 @@
+import PositionTop from "assets/icons/positions/top.svg";
+import PositionBot from "assets/icons/positions/bottom.svg";
+import PositionMid from "assets/icons/positions/middle.svg";
+import PositionJng from "assets/icons/positions/jungle.svg";
+import PositionSup from "assets/icons/positions/support.svg";
+
 export const getWinningRate = (wins: number, losses: number) => {
   return Math.round((wins / (wins + losses)) * 100);
 };
@@ -19,11 +25,11 @@ export const getPositionName = (positionName: string) => {
 };
 
 export const getPositionIcon = (position: string) => {
-  //   if (position === "TOP") return positionTop();
-  //   if (position === "MID") return positionMid();
-  //   if (position === "ADC") return positionBot();
-  //   if (position === "SUP") return positionSup();
-  //   if (position === "JNG") return positionJng();
+  if (position === "TOP") return PositionTop;
+  if (position === "MID") return PositionMid;
+  if (position === "ADC") return PositionBot;
+  if (position === "SUP") return PositionSup;
+  if (position === "JNG") return PositionJng;
 };
 
 export const getRoleRate = (positions: any) => {

@@ -3,11 +3,12 @@ import styled from "styled-components";
 import Champoins from "./Champions";
 
 import RecentWinRates from "./RecentWinRates";
+import Tabs from "./Tabs";
 
 const Rankings = ({ champions, recentWinRate }: any) => {
   const tabItems = ["챔피언 승률", "7일간 랭크 승률"];
 
-  const [currentTab, setCurrentTab] = useState<any>(tabItems[0]);
+  const [currentTab, setCurrentTab] = useState<string>(tabItems[0]);
 
   const handleChangeTab = (item: any) => {
     setCurrentTab(item);
@@ -25,17 +26,11 @@ const Rankings = ({ champions, recentWinRate }: any) => {
 
   return (
     <Container>
-      <TabHeader>
-        {tabItems?.map((el, i) => (
-          <Tab
-            className={el === currentTab ? "on" : ""}
-            onClick={() => handleChangeTab(el)}
-            key={i}
-          >
-            {el}
-          </Tab>
-        ))}
-      </TabHeader>
+      <Tabs
+        tabItems={tabItems}
+        handleChangeTab={handleChangeTab}
+        currentTab={currentTab}
+      />
       {currentTab === "챔피언 승률" ? (
         <Champoins champions={champions} />
       ) : (
@@ -47,32 +42,6 @@ const Rankings = ({ champions, recentWinRate }: any) => {
 
 const Container = styled.div`
   border: solid 1px #cdd2d2;
-`;
-const TabHeader = styled.div`
-  display: flex;
-`;
-const Tab = styled.div`
-  flex: 1;
-  height: 4.4rem;
-  font-size: 12px;
-  text-align: center;
-  color: #879292;
-  border-bottom: solid 1px #cdd2d2;
-  background-color: #f2f2f2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s;
-  &:first-child {
-    border-right: solid 1px #cdd2d2;
-  }
-  &.on {
-    background-color: #eaeaea;
-    color: #5e5e5e;
-    font-weight: bold;
-    border-bottom: none;
-  }
 `;
 
 export default Rankings;

@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import Champion from "./Champion";
 
-import { IChampion } from "types/types";
+import { IMostChampion } from "types/types";
 
-const Champions = ({ champions }: { champions: IChampion[] }) => {
+const Champions = ({ champions }: { champions: IMostChampion[] }) => {
   return (
     <Container>
-      {champions?.map((el: IChampion) => (
+      {champions?.map((el: IMostChampion) => (
         <Champion {...el} />
       ))}
     </Container>

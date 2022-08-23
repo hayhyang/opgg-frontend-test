@@ -3,13 +3,19 @@ import styled from "styled-components";
 import { getTier, getWinningRate } from "../../../lib/utils";
 
 import { ILeague } from "types/types";
+import Image from "next/image";
 
 const FreeLeague = ({ wins, losses, tierRank }: ILeague) => {
   const winningRate = getWinningRate(wins, losses);
 
   return (
     <Container>
-      {/* <Image size="6.4rem" alt={tierRank?.name} src={tierRank?.imageUrl} /> */}
+      <Image
+        src={tierRank?.imageUrl}
+        width="64"
+        height="64"
+        alt={tierRank?.name}
+      />
       <Metadata>
         <Name>{tierRank?.name}</Name>
         <Tier>{getTier(tierRank)}</Tier>
