@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Bookmark from "./Bookmark";
-import RecentSearch from "./RecentSearch";
+import RecentSearch from "./History";
 
 const Tabs = ({ tabItems, handleChangeTab, currentTab }: any) => {
   return (

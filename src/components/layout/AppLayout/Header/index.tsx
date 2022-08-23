@@ -1,12 +1,15 @@
+import dynamic from "next/dynamic";
 import styled from "styled-components";
 
-import Search from "./Search";
+const SearchNoSSR = dynamic(() => import("./Search"), {
+  ssr: false,
+});
 
 const Header = () => {
   return (
     <Container>
       <Inner>
-        <Search />
+        <SearchNoSSR />
       </Inner>
     </Container>
   );

@@ -29,7 +29,6 @@ const MatchesGame = ({
   const arrowRed = `/images/icon-viewdetail-red.png`;
 
   const [teams, setTeams] = useState([]);
-  const [itemList, setItemList] = useState([]);
   const killBadge = returnBadge(stats?.general?.largestMultiKillString);
   const scoreBadge = returnBadge(stats?.general?.opScoreBadge);
 
@@ -40,10 +39,6 @@ const MatchesGame = ({
     }
     getMatchDetailHandler();
   }, [gameId]);
-
-  useEffect(() => {
-    setItemList(items);
-  }, [items]);
 
   return (
     <Container isWin={isWin}>

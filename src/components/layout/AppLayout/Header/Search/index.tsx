@@ -1,32 +1,42 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-
 import { useRecoilState } from "recoil";
 import { openSearchState } from "recoil/state";
 
 import SearchOption from "./SearchOption";
 
 import Logo from "assets/icons/common/logo-gg.svg";
+import { setLocalStorage } from "lib/utils";
+import SearchResult from "./SearchResult";
 
 const Search = () => {
   const [openSearch, setOpenSearchState] = useRecoilState(openSearchState);
-  const [searchValue, setSearchValue] = useState();
+  const [searchValue, setSearchValue] = useState("");
   const router = useRouter();
+  const {
+    query: { summonerName },
+  } = router;
 
   const handleFocusInput = () => {
-    setOpenSearchState(true);
+    setOpenSearchState((v) => !v);
   };
 
   const handleChangeValue = ({ target: { value } }: any) => {
     setSearchValue(value);
+    setOpenSearchState(false);
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (searchValue) {
-      router.push(`/summoner/${searchValue}`);
+      if (summonerName !== searchValue) {
+        setLocalStorage("history", searchValue);
+        router.push(`/summoner/${searchValue}`);
+        setSearchValue("");
+      }
     }
+    setOpenSearchState(false);
   };
 
   return (
@@ -35,7 +45,7 @@ const Search = () => {
         <SearchBox>
           <Input
             placeholder="소환사명,챔피언…"
-            onFocus={handleFocusInput}
+            onClick={handleFocusInput}
             value={searchValue}
             onChange={handleChangeValue}
           />
@@ -44,7 +54,11 @@ const Search = () => {
           </Button>
         </SearchBox>
       </form>
-      {openSearch && <SearchOption />}
+      {openSearch && !searchValue ? (
+        <SearchOption />
+      ) : (
+        <SearchResult searchValue={searchValue} />
+      )}
     </Container>
   );
 };

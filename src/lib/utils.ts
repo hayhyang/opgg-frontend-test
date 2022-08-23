@@ -51,3 +51,22 @@ export const returnBadge = (badge: string) => {
     };
   } else return null;
 };
+
+export const getLocalStorage = (key: string) => {
+  const list = window.localStorage.getItem(key);
+  if (list) return JSON.parse(list);
+  else return [];
+};
+
+export const setLocalStorage = (key: string, value: string) => {
+  const arr = getLocalStorage(key);
+  console.log("arr", arr, value);
+  let updateArr = [];
+  if (arr.includes(value)) {
+    updateArr = [...arr].filter((el) => el !== value);
+  } else {
+    updateArr = [...arr, value];
+  }
+  console.log("updateArr", updateArr);
+  window.localStorage.setItem(key, JSON.stringify(updateArr));
+};

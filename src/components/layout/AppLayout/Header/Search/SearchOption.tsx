@@ -1,25 +1,28 @@
-import usePageOn from "hooks/usePageOn";
 import { useState } from "react";
 import styled from "styled-components";
+
+import usePageOn from "hooks/usePageOn";
+import { getLocalStorage } from "lib/utils";
 import { fadeIn } from "styles/modules";
+
 import Bookmark from "./Bookmark";
-import RecentSearch from "./RecentSearch";
+import History from "./History";
 import Tabs from "./Tabs";
 
 const SearchOption = () => {
-  const recentList = ["OOPG", "Hide on bush", "뽀 삐"];
-  const bookmarkList = ["OOPG"];
+  const history = getLocalStorage("history");
+  const bookmark = getLocalStorage("bookmark");
 
   const { pageOn } = usePageOn();
 
   const tabItems = [
     {
       name: "최근검색",
-      component: <RecentSearch recentList={recentList} />,
+      component: <History history={history} />,
     },
     {
       name: "즐겨찾기",
-      component: <Bookmark bookmarkList={bookmarkList} />,
+      component: <Bookmark bookmark={bookmark} />,
     },
   ];
 

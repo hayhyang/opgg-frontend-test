@@ -12,7 +12,7 @@ z-index: -100;
 opacity: 0;
 visibility: hidden;
 transform: translateY(${y}px);
-transition: 0.3s;
+transition: 0.2s;
 &.on {
   z-index: 100; 
   opacity: 1;

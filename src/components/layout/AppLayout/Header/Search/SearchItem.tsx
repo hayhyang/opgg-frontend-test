@@ -1,42 +1,49 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { useSetRecoilState } from "recoil";
+import { openSearchState } from "recoil/state";
+import { getLocalStorage, setLocalStorage } from "lib/utils";
 
-const SearchItem = ({ el }: any) => {
+const SearchItem = ({ el, star }: { el: string; star: boolean }) => {
   const bookmarkDelete = `/images/icon-history-delete.png`;
   const bookmarkOn = `/images/icon-favorite-on.png`;
   const bookmarkOff = `/images/icon-favorite-off.png`;
 
-  const router = useRouter();
+  const setOpenSearchState = useSetRecoilState(openSearchState);
+  const bookmark = getLocalStorage("bookmark");
 
-  const bookmarkList: string[] = ["OOPG"];
+  const router = useRouter();
 
   const handleClick = (el: string) => {
     router.push(`/summoner/${el}`);
+    setOpenSearchState(false);
   };
 
   const handleClickBookmark = (e: any, el: string) => {
     e.preventDefault();
     e.stopPropagation();
+    setLocalStorage("bookmark", el);
   };
 
   const handleDeleteBookmark = (e: any, el: string) => {
     e.preventDefault();
     e.stopPropagation();
+    setLocalStorage("bookmark", el);
   };
 
   return (
     <Container onClick={() => handleClick(el)}>
       <Value>{el}</Value>
-      <Button onClick={(e) => handleClickBookmark(e, el)}>
-        <img
-          src={
-            bookmarkList.some((e: string) => e === el)
-              ? bookmarkOn
-              : bookmarkOff
-          }
-          alt="즐겨찾기 off"
-        />
-      </Button>
+      {star && (
+        <Button onClick={(e) => handleClickBookmark(e, el)}>
+          <img
+            src={
+              bookmark?.some((e: string) => e === el) ? bookmarkOn : bookmarkOff
+            }
+            alt="즐겨찾기 off"
+          />
+        </Button>
+      )}
       <Button onClick={(e) => handleDeleteBookmark(e, el)}>
         <img src={bookmarkDelete} alt="즐겨찾기 삭제" />
       </Button>

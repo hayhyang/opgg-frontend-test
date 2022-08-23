@@ -11,11 +11,9 @@ const Position = ({
 }: any) => {
   const roleRate = getRoleRate(games);
 
-  console.log("getPositionIcon(position)", getPositionIcon(position));
-
   return (
     <Container>
-      <Icon>{getPositionIcon(position)}</Icon>
+      {/* <Icon>{getPositionIcon(position)}</Icon> */}
       <Metadata>
         <Name>{getPositionName(positionName)}</Name>
         <Rates>

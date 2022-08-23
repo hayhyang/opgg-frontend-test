@@ -2,9 +2,9 @@ import { memo } from "react";
 import styled from "styled-components";
 
 import { getWinningRate } from "lib/utils";
-import { ellipsis } from "../../../../styles/modules";
 
 import Avatar from "components/common/Avatar";
+import { ellipsis } from "styles/modules";
 
 const RecentWinRate = ({ name, imageUrl, wins, losses }: any) => {
   const winningRate = getWinningRate(wins, losses);
