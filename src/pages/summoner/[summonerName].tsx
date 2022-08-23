@@ -1,14 +1,20 @@
-import SummonerHeader from "components/Summoner/SummonerHeader";
-import SummonerContents from "components/Summoner/SummonerContents";
-
 import type { GetServerSideProps, NextPage } from "next";
+import SummonerLayout from "components/layout/SummonerLayout";
+import Profile from "components/summoner/Profile";
+import Leagues from "components/summoner/Leagues";
+import Rankings from "components/summoner/Rankings";
+import Dashboard from "components/summoner/Dashboard";
+import Games from "components/summoner/Games";
 
 const Summoner: NextPage = ({ summoner, mostInfo, matches }: any) => {
   return (
-    <>
-      <SummonerHeader {...summoner} />
-      <SummonerContents />
-    </>
+    <SummonerLayout
+      profile={<Profile {...summoner} />}
+      leagues={<Leagues leagues={summoner?.leagues} />}
+      rankings={<Rankings {...mostInfo} />}
+      dashboard={<Dashboard {...matches} />}
+      games={<Games games={matches?.games} />}
+    />
   );
 };
 

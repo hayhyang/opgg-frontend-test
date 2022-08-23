@@ -1,29 +1,25 @@
 export interface IChampion {
-  imageUrl: string;
-  level: number;
+  imageUrl?: string;
+  level?: number;
 }
 
 export interface IChampionWinRate {
-  id: number;
-  imageUrl: string;
-  key: string;
-  losses: number;
-  name: string;
-  wins: number;
+  id?: number;
+  imageUrl?: string;
+  key?: string;
+  losses?: number;
+  name?: string;
+  wins?: number;
 }
 
 export interface IFellowPlayer {
-  champion: {
-    [key: string]: IChampion;
-  };
+  champion: IChampion;
   summonerId: string;
   summonerName: string;
 }
 
 export interface IGameInfo {
-  champion: {
-    [key: string]: IChampion;
-  };
+  champion: IChampion;
   createDate: number;
   gameId: string;
   gameLength: number;
@@ -35,7 +31,7 @@ export interface IGameInfo {
   needRenew: boolean;
   peak: string[];
   spells: IImageObj[];
-  stats: { [key: string]: IGameInfoStats };
+  stats: IGameInfoStats;
   summonerId: string;
   summonerName: string;
   tierRankShort: string;
@@ -43,7 +39,7 @@ export interface IGameInfo {
 
 export interface IGameInfoStats {
   general: General;
-  ward: { [key: string]: IWard };
+  ward: IWard;
 }
 
 export interface General {
@@ -72,7 +68,7 @@ export interface ILadderRank {
 export interface ILeague {
   hasResults: boolean;
   losses: number;
-  tierRank: { [key: string]: ITierRank };
+  tierRank: ITierRank;
   wins: number;
 }
 
@@ -90,7 +86,7 @@ export interface IMatchesDTO {
   champions: IChampion[];
   games: IGameInfo[];
   positions: [];
-  summary: { [key: string]: ISummary };
+  summary: ISummary;
 }
 
 export interface IMostChampion {
@@ -142,7 +138,7 @@ export interface ISummoner {
 }
 
 export interface ISummonerDTO {
-  summoner: { [key: string]: ISummoner };
+  summoner: ISummoner;
 }
 
 export interface ITeam {

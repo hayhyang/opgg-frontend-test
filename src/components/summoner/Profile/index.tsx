@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { ISummoner } from "types/types";
 
-const SummonerHeader = ({
+const Profile = ({
   name,
   ladderRank,
   level,
@@ -11,44 +11,34 @@ const SummonerHeader = ({
 }: ISummoner) => {
   return (
     <Container>
-      <Inner>
-        <Tags>
-          {previousTiers?.map((el: any, i: number) => (
-            <Tag key={i}>
-              <strong>S{el?.season}</strong>
-              &nbsp;
-              {el?.tier}
-            </Tag>
-          ))}
-        </Tags>
-        <ProfileArea>
-          <ProfileImage>
-            <img src={profileImageUrl} alt={name} />
-            <Level>{level}</Level>
-          </ProfileImage>
-          <Profile>
-            <Name>{name}</Name>
-            <LadderRank>
-              &nbsp;레더 랭킹&nbsp;
-              <strong>{ladderRank?.rank}</strong>위 (상위&nbsp;
-              {ladderRank?.rankPercentOfTop}%)
-            </LadderRank>
-          </Profile>
-        </ProfileArea>
-      </Inner>
+      <Tags>
+        {previousTiers?.map((el: any, i: number) => (
+          <Tag key={i}>
+            <strong>S{el?.season}</strong>
+            &nbsp;
+            {el?.tier}
+          </Tag>
+        ))}
+      </Tags>
+      <ProfileArea>
+        <ProfileImage>
+          <img src={profileImageUrl} alt={name} />
+          <Level>{level}</Level>
+        </ProfileImage>
+        <Metadata>
+          <Name>{name}</Name>
+          <LadderRank>
+            &nbsp;레더 랭킹&nbsp;
+            <strong>{ladderRank?.rank}</strong>위 (상위&nbsp;
+            {ladderRank?.rankPercentOfTop}%)
+          </LadderRank>
+        </Metadata>
+      </ProfileArea>
     </Container>
   );
 };
 
-const Container = styled.div`
-  border-bottom: 1px solid #d8d8d8;
-`;
-
-const Inner = styled.div`
-  max-width: 100rem;
-  margin: 0 auto;
-  padding: 1.5rem 2.1rem 1.2rem;
-`;
+const Container = styled.div``;
 
 const Tags = styled.ul`
   display: flex;
@@ -97,7 +87,7 @@ const Level = styled.span`
   font-size: 14px;
   text-align: center;
 `;
-const Profile = styled.div`
+const Metadata = styled.div`
   margin-left: 1.7rem;
   padding: 1.1rem 0 0;
 `;
@@ -115,4 +105,4 @@ const LadderRank = styled.p`
   font-size: 1.1rem;
 `;
 
-export default SummonerHeader;
+export default Profile;

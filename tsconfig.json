@@ -20,7 +20,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/pages/server-side.js",
+    "src/components/pages/server-side.js",
     "src/assets/svg.jsx"
   ],
   "exclude": ["node_modules"]
