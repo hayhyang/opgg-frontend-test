@@ -49,12 +49,9 @@ const Game = ({
   const ward = getWard(stats);
 
   const { data: itemData } = useRecoilValue(getItems);
-  console.log("itemData", itemData);
-  console.log("items", items);
 
   const getItem = (imageUrl: string) => {
     const id = Number(imageUrl.split("/").pop()?.split(".")[0]);
-    console.log("itemData", itemData[id]);
     const item = itemData[id];
 
     return item;

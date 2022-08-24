@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import styled from "styled-components";
 
 import {
@@ -9,6 +9,7 @@ import {
 } from "lib/utils";
 
 import { ISummary } from "types/types";
+import usePageOn from "hooks/usePageOn";
 
 interface ChartProps {
   ratio: number;
@@ -25,13 +26,15 @@ const Stats = ({
   const winningRate = getWinningRate(wins, losses);
   const games: number = wins + losses;
 
+  const { pageOn } = usePageOn();
+
   return (
     <Container>
       <Title>
         {games}전 {wins}승 {losses}패
       </Title>
       <ChartArea>
-        <Chart ratio={100 - winningRate}>
+        <Chart ratio={pageOn ? 100 - winningRate : 0}>
           <WinningRate>
             <strong>{winningRate}</strong>%
           </WinningRate>
