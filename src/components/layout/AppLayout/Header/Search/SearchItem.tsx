@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
-import { bookmarkState, openSearchState } from "recoil/state";
+import { bookmarkState, openSearchState, searchValueState } from "recoil/state";
 
 interface SearchItemProps {
   el: string;

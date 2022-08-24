@@ -88,3 +88,8 @@ export const bookmarkState = atom({
   default: [],
   effects: [localStorageEffect("bookmark")],
 });
+
+export const searchValueState = atom({
+  key: "searchValueState",
+  default: "",
+});

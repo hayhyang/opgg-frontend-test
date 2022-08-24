@@ -1,7 +1,7 @@
 import Avatar from "components/common/Avatar";
 import { useRouter } from "next/router";
 import { useSetRecoilState } from "recoil";
-import { openSearchState } from "recoil/state";
+import { openSearchState, searchValueState } from "recoil/state";
 import styled from "styled-components";
 import { ISummoner } from "types/types";
 
@@ -9,10 +9,12 @@ const ResultItem = ({ name, profileImageUrl, previousTiers }: ISummoner) => {
   const router = useRouter();
 
   const setOpenSearchState = useSetRecoilState(openSearchState);
+  const setSearchValue = useSetRecoilState(searchValueState);
 
   const handleClick = () => {
     router.push(`/summoner/${name}`);
     setOpenSearchState(false);
+    setSearchValue("");
   };
   return (
     <Container onClick={handleClick}>

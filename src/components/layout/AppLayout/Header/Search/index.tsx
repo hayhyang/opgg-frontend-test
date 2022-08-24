@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 
 import { getSummonerApi } from "pages/api/api";
 
-import { historyState, openSearchState } from "recoil/state";
+import { historyState, openSearchState, searchValueState } from "recoil/state";
 
 import SearchOption from "./SearchOption";
 import SearchResult from "./SearchResult";
@@ -16,7 +16,7 @@ import { ISummoner } from "types/types";
 
 const Search = () => {
   const [openSearch, setOpenSearchState] = useRecoilState(openSearchState);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useRecoilState(searchValueState);
   const [history, setHistory] = useRecoilState<any>(historyState);
   const targetRef = useRef<any>();
   const router = useRouter();
