@@ -1,30 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import usePageOn from "hooks/usePageOn";
-import { getLocalStorage } from "lib/utils";
+import { useRecoilState } from "recoil";
+
 import { fadeIn } from "styles/modules";
 
 import Bookmark from "./Bookmark";
 import History from "./History";
 import Tabs from "./Tabs";
 
+import { bookmarkState, historyState } from "recoil/state";
+
 const SearchOption = () => {
-  const history = getLocalStorage("history");
-  const bookmark = getLocalStorage("bookmark");
+  const [bookmark, setBookmark] = useRecoilState<any>(bookmarkState);
+  const [history, setHistory] = useRecoilState<any>(historyState);
+
+  const updateStorage = (storageKey: string, value: string) => {
+    if (storageKey === "bookmark") {
+      let updateArr = [];
+      if (bookmark.includes(value)) {
+        updateArr = [...bookmark].filter((el) => el !== value);
+      } else {
+        updateArr = [...bookmark, value];
+      }
+      setBookmark(updateArr);
+    }
+
+    if (storageKey === "history") {
+      let updateArr = [];
+      if (history.includes(value)) {
+        updateArr = [...history].filter((el) => el !== value);
+      } else {
+        updateArr = [...history, value];
+      }
+      setHistory(updateArr);
+    }
+  };
 
   const { pageOn } = usePageOn();
 
-  const tabItems = [
-    {
-      name: "최근검색",
-      component: <History history={history} />,
-    },
-    {
-      name: "즐겨찾기",
-      component: <Bookmark bookmark={bookmark} />,
-    },
-  ];
+  const tabItems = ["최근검색", "즐겨찾기"];
 
   const [currentTab, setCurrentTab] = useState(tabItems[0]);
 
@@ -40,7 +56,11 @@ const SearchOption = () => {
         handleChangeTab={handleChangeTab}
         currentTab={currentTab}
       />
-      {currentTab.component}
+      {currentTab === "최근검색" ? (
+        <History history={history} updateStorage={updateStorage} />
+      ) : (
+        <Bookmark bookmark={bookmark} updateStorage={updateStorage} />
+      )}
     </Container>
   );
 };

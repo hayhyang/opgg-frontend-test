@@ -1,16 +1,27 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { useSetRecoilState } from "recoil";
-import { openSearchState } from "recoil/state";
-import { getLocalStorage, setLocalStorage } from "lib/utils";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { bookmarkState, historyState, openSearchState } from "recoil/state";
 
-const SearchItem = ({ el, star }: { el: string; star: boolean }) => {
+const SearchItem = ({
+  el,
+  star,
+  storageKey,
+  setter,
+  updateStorage,
+}: {
+  el: string;
+  star: boolean;
+  storageKey: string;
+  setter: any;
+  updateStorage: any;
+}) => {
   const bookmarkDelete = `/images/icon-history-delete.png`;
   const bookmarkOn = `/images/icon-favorite-on.png`;
   const bookmarkOff = `/images/icon-favorite-off.png`;
+  const [bookmark, setBookmark] = useRecoilState<any>(bookmarkState);
 
   const setOpenSearchState = useSetRecoilState(openSearchState);
-  const bookmark = getLocalStorage("bookmark");
 
   const router = useRouter();
 
@@ -19,23 +30,24 @@ const SearchItem = ({ el, star }: { el: string; star: boolean }) => {
     setOpenSearchState(false);
   };
 
-  const handleClickBookmark = (e: any, el: string) => {
+  const handleSetBookmark = (e: any, el: string) => {
     e.preventDefault();
     e.stopPropagation();
-    setLocalStorage("bookmark", el);
+    updateStorage("bookmark", el);
   };
 
-  const handleDeleteBookmark = (e: any, el: string) => {
+  const handleDelete = (e: any, el: string) => {
     e.preventDefault();
     e.stopPropagation();
-    setLocalStorage("bookmark", el);
+    updateStorage(storageKey, el);
   };
 
   return (
     <Container onClick={() => handleClick(el)}>
+      <Region>KR</Region>
       <Value>{el}</Value>
       {star && (
-        <Button onClick={(e) => handleClickBookmark(e, el)}>
+        <Button onClick={(e) => handleSetBookmark(e, el)}>
           <img
             src={
               bookmark?.some((e: string) => e === el) ? bookmarkOn : bookmarkOff
@@ -44,7 +56,7 @@ const SearchItem = ({ el, star }: { el: string; star: boolean }) => {
           />
         </Button>
       )}
-      <Button onClick={(e) => handleDeleteBookmark(e, el)}>
+      <Button onClick={(e) => handleDelete(e, el)}>
         <img src={bookmarkDelete} alt="즐겨찾기 삭제" />
       </Button>
     </Container>
@@ -55,6 +67,21 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   padding: 8px 16px;
+`;
+
+const Region = styled.span`
+  isplay: inline-block;
+  padding: 0 4px;
+  border-radius: 2px;
+  height: 18px;
+  line-height: 20px;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: normal;
+  color: rgb(255, 255, 255);
+  background-color: #1ea1f7;
+  text-transform: uppercase;
+  margin-right: 17px;
 `;
 const Value = styled.div`
   font-size: 12px;

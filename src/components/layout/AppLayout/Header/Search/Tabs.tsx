@@ -8,11 +8,11 @@ const Tabs = ({ tabItems, handleChangeTab, currentTab }: any) => {
     <Container>
       {tabItems?.map((el, i) => (
         <Tab
-          className={el.name === currentTab.name ? "on" : ""}
+          className={el === currentTab ? "on" : ""}
           onClick={(e) => handleChangeTab(e, el)}
           key={i}
         >
-          {el.name}
+          {el}
         </Tab>
       ))}
     </Container>

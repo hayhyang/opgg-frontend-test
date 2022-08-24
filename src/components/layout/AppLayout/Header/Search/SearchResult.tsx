@@ -2,11 +2,17 @@ import styled from "styled-components";
 
 import usePageOn from "hooks/usePageOn";
 import { fadeIn } from "styles/modules";
+import { ISummoner } from "types/types";
+import ResultItem from "./ResultItem";
 
-const SearchResult = ({ searchValue }: { searchValue: string }) => {
+const SearchResult = ({ summoner }: { summoner: ISummoner }) => {
   const { pageOn } = usePageOn();
 
-  return <Container className={pageOn ? "on" : ""}></Container>;
+  return (
+    <Container className={pageOn ? "on" : ""}>
+      <ResultItem {...summoner} />
+    </Container>
+  );
 };
 
 const Container = styled.div`

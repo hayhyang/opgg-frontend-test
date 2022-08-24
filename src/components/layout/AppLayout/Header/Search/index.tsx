@@ -1,64 +1,103 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
-import { openSearchState } from "recoil/state";
+
+import { getSummonerApi } from "pages/api/api";
+
+import { historyState, openSearchState } from "recoil/state";
 
 import SearchOption from "./SearchOption";
+import SearchResult from "./SearchResult";
 
 import Logo from "assets/icons/logo-gg.svg";
-import { setLocalStorage } from "lib/utils";
-import SearchResult from "./SearchResult";
+
+import { ISummoner } from "types/types";
 
 const Search = () => {
   const [openSearch, setOpenSearchState] = useRecoilState(openSearchState);
   const [searchValue, setSearchValue] = useState("");
+  const [history, setHistory] = useRecoilState<any>(historyState);
+  const inputRef = useRef();
   const router = useRouter();
   const {
     query: { summonerName },
   } = router;
 
   const handleClickInput = () => {
-    setOpenSearchState(false);
+    setOpenSearchState(true);
   };
 
-  const handleChangeValue = ({ target: { value } }: any) => {
+  const handleChangeValue = ({
+    target: { value },
+  }: {
+    target: { value: string };
+  }) => {
     setSearchValue(value);
-    setOpenSearchState(false);
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (searchValue) {
       if (summonerName !== searchValue) {
-        setLocalStorage("history", searchValue);
         router.push(`/summoner/${searchValue}`);
-        setSearchValue("");
+
+        if (history.includes(searchValue)) {
+          const filter = history.filter((el: string) => el !== searchValue);
+          setHistory([searchValue, ...filter]);
+        } else {
+          setHistory([...history, searchValue]);
+        }
       }
     }
+    setSearchValue("");
     setOpenSearchState(false);
   };
+
+  const [summoner, setSummoner] = useState<ISummoner>({
+    name: "",
+    profileImageUrl: "",
+    previousTiers: [],
+  });
+
+  const getSummoner = async () => {
+    if (searchValue) {
+      const result = await getSummonerApi(searchValue);
+      setSummoner({
+        name: result?.summoner?.name,
+        profileImageUrl: result?.summoner?.profileImageUrl,
+        previousTiers: result?.summoner?.previousTiers,
+      });
+    }
+  };
+
+  useEffect(() => {
+    getSummoner();
+  }, [searchValue]);
 
   return (
     <Container>
       <form onSubmit={handleSubmit}>
         <SearchBox>
           <Input
+            ref={inputRef}
             placeholder="소환사명,챔피언…"
             onClick={handleClickInput}
             value={searchValue}
             onChange={handleChangeValue}
+            onFocus={handleClickInput}
           />
           <Button type="submit">
             <Logo />
           </Button>
         </SearchBox>
       </form>
-      {openSearch && !searchValue ? (
-        <SearchOption />
-      ) : (
-        <SearchResult searchValue={searchValue} />
-      )}
+      {openSearch &&
+        (!searchValue ? (
+          <SearchOption />
+        ) : (
+          <SearchResult summoner={summoner} />
+        ))}
     </Container>
   );
 };

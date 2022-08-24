@@ -46,25 +46,6 @@ export const returnBadge = (badge: string) => {
   } else return null;
 };
 
-export const getLocalStorage = (key: string) => {
-  const list = window.localStorage.getItem(key);
-  if (list) return JSON.parse(list);
-  else return [];
-};
-
-export const setLocalStorage = (key: string, value: string) => {
-  const arr = getLocalStorage(key);
-  console.log("arr", arr, value);
-  let updateArr = [];
-  if (arr.includes(value)) {
-    updateArr = [...arr].filter((el) => el !== value);
-  } else {
-    updateArr = [...arr, value];
-  }
-  console.log("updateArr", updateArr);
-  window.localStorage.setItem(key, JSON.stringify(updateArr));
-};
-
 export const returnWinColor = (value: number) => {
   if (value >= 60) return "#c6443e";
   else return "#555";
@@ -76,3 +57,18 @@ export const returnKDAColor = (kda: number) => {
   if (kda >= 3.0) return "#2daf7f";
   if (kda < 3.0) return "#5e5e5e";
 };
+
+export const localStorageEffect =
+  (key: string) =>
+  ({ setSelf, onSet }: any) => {
+    const savedValue = localStorage.getItem(key);
+    if (savedValue != null) {
+      setSelf(JSON.parse(savedValue));
+    }
+
+    onSet((newValue: any, _: any, isReset: any) => {
+      isReset
+        ? localStorage.removeItem(key)
+        : localStorage.setItem(key, JSON.stringify(newValue));
+    });
+  };

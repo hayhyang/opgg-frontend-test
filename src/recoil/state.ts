@@ -1,3 +1,4 @@
+import { localStorageEffect } from "lib/utils";
 import { getMatchsApi, getMostInfoApi, getSummonerApi } from "pages/api/api";
 import { atom, selector } from "recoil";
 
@@ -13,6 +14,10 @@ export const dashboardTabState = atom({
 
 export const openSearchState = atom({
   key: "openSearchState",
+  default: false,
+});
+export const openResultState = atom({
+  key: "openResultState",
   default: false,
 });
 
@@ -53,4 +58,16 @@ export const getMatchs = selector({
       throw Error("잘못된 요청입니다.");
     }
   },
+});
+
+export const historyState = atom({
+  key: "history",
+  default: [],
+  effects: [localStorageEffect("history")],
+});
+
+export const bookmarkState = atom({
+  key: "bookmark",
+  default: [],
+  effects: [localStorageEffect("bookmark")],
 });
