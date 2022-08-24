@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { SearchItemProps } from "types/common";
 import Empty from "./Empty";
 
 import SearchItem from "./SearchItem";
 
-const History = ({ history, setter, updateStorage }: any) => {
+const History = ({ history, updateStorage }: SearchItemProps) => {
   return (
     <Container>
       {history?.length ? (
@@ -13,7 +14,6 @@ const History = ({ history, setter, updateStorage }: any) => {
             el={el}
             star={true}
             storageKey="history"
-            setter={setter}
             updateStorage={updateStorage}
           />
         ))

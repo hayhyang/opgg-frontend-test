@@ -1,18 +1,25 @@
 import { memo } from "react";
 import styled from "styled-components";
+import { IPosition } from "types/types";
 
 import Position from "./Position";
 
-const Positions = ({ positions }: any) => {
-  const getRoleRate = (games: number) => {
-    const totalGames = positions.reduce((a: any, b: any) => a.games + b.games);
+interface IPositions {
+  positions: IPosition[];
+}
+
+const Positions = ({ positions }: IPositions) => {
+  const getRoleRate = (games = 0) => {
+    const totalGames = positions.reduce(
+      (a: IPosition, b: IPosition) => a.games + b.games
+    );
     return Math.round((games / totalGames) * 100);
   };
 
   return (
     <Container>
       <Title>선호 포지션 (랭크)</Title>
-      {positions?.map((el: any, i: number) => (
+      {positions?.map((el: IPosition, i: number) => (
         <Position {...el} key={i} getRoleRate={getRoleRate} />
       ))}
     </Container>

@@ -1,7 +1,12 @@
-import { useState } from "react";
 import styled from "styled-components";
 
-const Tabs = ({ currentTab, tabItems, handleChangeTab }: any) => {
+interface TabsProps {
+  currentTab: string;
+  tabItems: string[];
+  handleChangeTab: (el: string) => void;
+}
+
+const Tabs = ({ currentTab, tabItems, handleChangeTab }: TabsProps) => {
   return (
     <Container>
       {tabItems?.map((el: string, i: number) => (

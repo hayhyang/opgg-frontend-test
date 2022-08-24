@@ -1,25 +1,27 @@
+import { MouseEvent } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { bookmarkState, historyState, openSearchState } from "recoil/state";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+
+import { bookmarkState, openSearchState } from "recoil/state";
+
+interface SearchItemProps {
+  el: string;
+  star: boolean;
+  storageKey: string;
+  updateStorage: (storageKey: string, el: string) => void;
+}
 
 const SearchItem = ({
   el,
   star,
   storageKey,
-  setter,
   updateStorage,
-}: {
-  el: string;
-  star: boolean;
-  storageKey: string;
-  setter: any;
-  updateStorage: any;
-}) => {
+}: SearchItemProps) => {
   const bookmarkDelete = `/images/icon-history-delete.png`;
   const bookmarkOn = `/images/icon-favorite-on.png`;
   const bookmarkOff = `/images/icon-favorite-off.png`;
-  const [bookmark, setBookmark] = useRecoilState<any>(bookmarkState);
+  const bookmark = useRecoilValue<string[]>(bookmarkState);
 
   const setOpenSearchState = useSetRecoilState(openSearchState);
 
@@ -30,13 +32,13 @@ const SearchItem = ({
     setOpenSearchState(false);
   };
 
-  const handleSetBookmark = (e: any, el: string) => {
+  const handleSetBookmark = (e: MouseEvent<HTMLButtonElement>, el = "") => {
     e.preventDefault();
     e.stopPropagation();
     updateStorage("bookmark", el);
   };
 
-  const handleDelete = (e: any, el: string) => {
+  const handleDelete = (e: MouseEvent<HTMLButtonElement>, el = "") => {
     e.preventDefault();
     e.stopPropagation();
     updateStorage(storageKey, el);

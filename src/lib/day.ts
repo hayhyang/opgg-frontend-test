@@ -1,4 +1,4 @@
-export const getTimeStamp = (timestamp: number) => {
+export const getTimeStamp = (timestamp = 0) => {
   const today = new Date();
   const date = new Date(timestamp * 1000);
 
@@ -25,11 +25,20 @@ export const getTimeStamp = (timestamp: number) => {
   return `${Math.floor(betweenTimeDay / 365)}년전`;
 };
 
-export const getGameLength = (timestamp: number) => {
-  // const pad = (num: number) => ("0" + num).slice(-2);
-  // const date = new Date(timestamp * 1000);
-  // let hours = date.getHours(),
-  //   minutes = date.getMinutes(),
-  //   seconds = date.getSeconds();
-  // return pad(hours) + "시간" + pad(minutes) + "분" + pad(seconds) + "초";
+export const timeFormat = (num: number, singular: string) => {
+  return num > 0 ? num + (num === 1 ? `${singular} ` : `${singular} `) : "";
+};
+
+export const getGameLength = (timestamp = 0) => {
+  const seconds = Math.floor(timestamp % 60);
+  const minutes = Math.floor((timestamp % 3600) / 60);
+  const hours = Math.floor((timestamp % (3600 * 24)) / 3600);
+  const days = Math.floor(timestamp / (3600 * 24));
+
+  const secondsStr = timeFormat(seconds, "초");
+  const minutesStr = timeFormat(minutes, "분");
+  const hoursStr = timeFormat(hours, "시간");
+  const daysStr = timeFormat(days, "일");
+
+  return `${daysStr}${hoursStr}${minutesStr}${secondsStr}`.replace(/,\s*$/, "");
 };

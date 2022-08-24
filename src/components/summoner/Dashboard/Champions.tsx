@@ -5,14 +5,18 @@ import Champion from "./Champion";
 
 import { IMostChampion } from "types/types";
 
-const Champions = ({ champions }: { champions: IMostChampion[] }) => {
+interface ChampionsProps {
+  champions: IMostChampion[];
+}
+
+const Champions = ({ champions }: ChampionsProps) => {
   const defaultChamp = Array.from(Array(3).keys());
 
   return (
     <Container>
       {defaultChamp.map((i: number) => {
-        if (champions[i]) return <Champion {...champions[i]} key={i} />;
-        else return <Champion empty={true} key={i} />;
+        if (champions[i]) return <Champion {...champions[i]} key={String(i)} />;
+        else return <Champion empty={true} key={String(i)} />;
       })}
     </Container>
   );

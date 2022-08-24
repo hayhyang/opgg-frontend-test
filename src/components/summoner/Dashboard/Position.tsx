@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { IPosition } from "types/types";
 
 interface PositionProps extends IPosition {
-  getRoleRate?: any;
+  getRoleRate?: (games: number) => void;
 }
 
 const Position = ({
@@ -15,24 +15,26 @@ const Position = ({
   losses,
   getRoleRate,
 }: PositionProps) => {
-  const roleRate = getRoleRate(games || 0);
+  const roleRate = getRoleRate(games);
 
   return (
     <Container>
       <Icon>
         <Image
-          src={getPositionIcon(position || "") || ""}
+          src={getPositionIcon(position) || ""}
           alt="포지션"
           width="28"
           height="28"
         />
       </Icon>
       <Metadata>
-        <Name>{getPositionName(positionName || "")}</Name>
+        <Name>{getPositionName(positionName)}</Name>
         <Rates>
-          <RoleRate>{roleRate || 0}%</RoleRate>
+          <RoleRate>
+            <>{roleRate}%</>
+          </RoleRate>
           <WinningRate>
-            승률 <strong>{getWinningRate(wins || 0, losses || 0)}</strong>%
+            승률 <strong>{getWinningRate(wins, losses)}</strong>%
           </WinningRate>
         </Rates>
       </Metadata>

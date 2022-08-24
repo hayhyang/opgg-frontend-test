@@ -2,24 +2,24 @@ const BASE_URL = "https://codingtest.op.gg/api";
 
 const SUMMONER_URL = `${BASE_URL}/summoner`;
 
-export function getSummonerApi(summonerName: string) {
+export function getSummonerApi(summonerName = "") {
   return fetch(`${SUMMONER_URL}/${summonerName}`).then((response) =>
     response.json()
   );
 }
 
-export function getMostInfoApi(summonerName: string) {
+export function getMostInfoApi(summonerName = "") {
   return fetch(`${SUMMONER_URL}/${summonerName}/mostInfo`).then((response) =>
     response.json()
   );
 }
 
-export function getMatchsApi(summonerName: string) {
+export function getMatchsApi(summonerName = "") {
   return fetch(`${SUMMONER_URL}/${summonerName}/matches`).then((response) =>
     response.json()
   );
 }
-export function getMatchDetailApi(summonerName: string, gameId: string) {
+export function getMatchDetailApi(summonerName = "", gameId = "") {
   return fetch(`${SUMMONER_URL}/${summonerName}/matchDetail/${gameId}`).then(
     (response) => response.json()
   );

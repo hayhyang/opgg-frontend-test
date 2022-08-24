@@ -5,8 +5,9 @@ import { getWinningRate } from "lib/utils";
 
 import Avatar from "components/common/Avatar";
 import { ellipsis } from "styles/modules";
+import { IChampionWinRate } from "types/types";
 
-const RecentWinRate = ({ name, imageUrl, wins, losses }: any) => {
+const RecentWinRate = ({ name, imageUrl, wins, losses }: IChampionWinRate) => {
   const winningRate = getWinningRate(wins, losses);
 
   return (
@@ -71,7 +72,7 @@ const BarChart = styled.div`
   overflow: hidden;
 `;
 
-const Win = styled.div<any>`
+const Win = styled.div<IChampionWinRate>`
   position: relative;
   text-align: left;
   background-color: #1f8ecd;
@@ -87,7 +88,7 @@ const Win = styled.div<any>`
     width: 10rem;
   }
 `;
-const Losses = styled.div<any>`
+const Losses = styled.div<IChampionWinRate>`
   position: relative;
   flex-grow: 1;
   text-align: right;

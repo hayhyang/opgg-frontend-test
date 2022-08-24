@@ -8,7 +8,7 @@ const Tabs = () => {
 
   const [dashboardTab, setDashboardTab] = useRecoilState(dashboardTabState);
 
-  const handleChangeTab = (item: any) => {
+  const handleChangeTab = (item: string) => {
     setDashboardTab(item);
   };
 

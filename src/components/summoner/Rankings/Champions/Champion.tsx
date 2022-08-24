@@ -10,6 +10,8 @@ import { ellipsis } from "styles/modules";
 
 import Avatar from "components/common/Avatar";
 
+import { IMostChampion } from "types/types";
+
 const Champion = ({
   name,
   imageUrl,
@@ -20,7 +22,7 @@ const Champion = ({
   kills,
   deaths,
   assists,
-}: any) => {
+}: IMostChampion) => {
   const winningRate = getWinningRate(wins, losses);
   const kda = getKDA(kills, deaths, assists);
 

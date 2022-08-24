@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
@@ -36,18 +36,16 @@ const Search = () => {
     setSearchValue(value);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (searchValue) {
-      if (summonerName !== searchValue) {
-        router.push(`/summoner/${searchValue}`);
+    if (searchValue && summonerName !== searchValue) {
+      router.push(`/summoner/${searchValue}`);
 
-        if (history.includes(searchValue)) {
-          const filter = history.filter((el: string) => el !== searchValue);
-          setHistory([searchValue, ...filter]);
-        } else {
-          setHistory([...history, searchValue]);
-        }
+      if (history.includes(searchValue)) {
+        const filter = history.filter((el: string) => el !== searchValue);
+        setHistory([searchValue, ...filter]);
+      } else {
+        setHistory([...history, searchValue]);
       }
     }
     setSearchValue("");
@@ -75,7 +73,7 @@ const Search = () => {
     getSummoner();
   }, [searchValue]);
 
-  const handleClose = (e: any) => {
+  const handleClose = (e: MouseEvent) => {
     if (targetRef?.current?.contains(e.target)) {
       return;
     }
@@ -121,24 +119,27 @@ const Search = () => {
 const Container = styled.div`
   background-color: #fff;
   height: 3.2rem;
-  width: 26rem;
+  width: 100%;
   border-radius: 0.2rem;
   display: flex;
   align-items: center;
   position: relative;
+  form {
+    width: 100%;
+  }
 `;
 
 const SearchBox = styled.div`
   background-color: #fff;
   height: 3.2rem;
-  width: 26rem;
+  width: 100%;
   border-radius: 0.2rem;
   display: flex;
   align-items: center;
   position: relative;
 `;
 
-const Input = styled.input<any>`
+const Input = styled.input`
   font-size: 12px;
   color: #727272;
   padding-left: 1.4rem;
@@ -146,7 +147,7 @@ const Input = styled.input<any>`
 `;
 const Button = styled.button`
   height: 100%;
-  width: 54px;
+  flex-basis: 54px;
   flex-shrink: 0;
   display: flex;
   align-items: center;

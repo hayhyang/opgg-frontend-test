@@ -7,7 +7,11 @@ import Game from "./Game";
 import { dashboardTabState } from "../../../recoil/state";
 import { IGameInfo } from "types/types";
 
-const Games = ({ games }: { games: IGameInfo[] }) => {
+interface GamesProps {
+  games: IGameInfo[];
+}
+
+const Games = ({ games }: GamesProps) => {
   const dashboardTab = useRecoilValue(dashboardTabState);
 
   const [gameList, setGameList] = useState<IGameInfo[]>([]);
@@ -19,10 +23,10 @@ const Games = ({ games }: { games: IGameInfo[] }) => {
   const returnGames = () => {
     if (dashboardTab === "전체") setGameList(games);
     if (dashboardTab === "솔로게임")
-      setGameList([...games].filter((el: any) => el.gameType === "솔랭"));
+      setGameList([...games].filter((el: IGameInfo) => el.gameType === "솔랭"));
     if (dashboardTab === "자유랭크")
       setGameList(
-        [...games].filter((el: any) => el.gameType === "자유 5:5 랭크")
+        [...games].filter((el: IGameInfo) => el.gameType === "자유 5:5 랭크")
       );
   };
 
@@ -32,7 +36,7 @@ const Games = ({ games }: { games: IGameInfo[] }) => {
 
   return (
     <Container>
-      {gameList?.map((el: any, i: number) => (
+      {gameList?.map((el: IGameInfo, i: number) => (
         <Game {...el} key={i} />
       ))}
     </Container>

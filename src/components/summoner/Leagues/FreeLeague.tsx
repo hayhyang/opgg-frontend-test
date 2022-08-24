@@ -11,7 +11,7 @@ const FreeLeague = ({ wins, losses, tierRank }: ILeague) => {
   return (
     <Container>
       <Image
-        src={tierRank?.imageUrl}
+        src={tierRank?.imageUrl || ""}
         width="64"
         height="64"
         alt={tierRank?.name}

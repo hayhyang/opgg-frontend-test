@@ -11,7 +11,7 @@ const SoloLeague = ({ wins, losses, tierRank }: ILeague) => {
   return (
     <Container>
       <Image
-        src={tierRank?.imageUrl}
+        src={tierRank?.imageUrl || ""}
         width="104"
         height="104"
         alt={tierRank?.name}
@@ -19,17 +19,17 @@ const SoloLeague = ({ wins, losses, tierRank }: ILeague) => {
       <Metadata>
         <Name>솔로 랭크</Name>
         <Total>
-          <strong>탑</strong> (총 {wins + losses}게임)
+          <strong>탑</strong> (총 {wins + losses || 0}게임)
         </Total>
         <Tier>{getTier(tierRank)}</Tier>
         <Score>
-          <LeaguePoint>{tierRank?.lp} LP</LeaguePoint>
+          <LeaguePoint>{tierRank?.lp || 0} LP</LeaguePoint>
           &nbsp;/&nbsp;
           <Score>
-            {wins}승 {losses}패
+            {wins || 0}승 {losses || 0}패
           </Score>
         </Score>
-        <WinningRate>승률 {winningRate}%</WinningRate>
+        <WinningRate>승률 {winningRate || 0}%</WinningRate>
       </Metadata>
     </Container>
   );

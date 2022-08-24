@@ -1,10 +1,15 @@
 import styled from "styled-components";
+import { IChampionWinRate } from "types/types";
 import RecentWinRate from "./RecentWinRate";
 
-const RecentWinRates = ({ recentWinRate }: any) => {
+interface RecentWinRateProps {
+  recentWinRate: IChampionWinRate[];
+}
+
+const RecentWinRates = ({ recentWinRate }: RecentWinRateProps) => {
   return (
     <Container>
-      {recentWinRate?.map((el: any, i: number) => (
+      {recentWinRate?.map((el: IChampionWinRate, i: number) => (
         <RecentWinRate {...el} key={i} />
       ))}
     </Container>

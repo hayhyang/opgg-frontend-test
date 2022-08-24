@@ -2,21 +2,21 @@ import { localStorageEffect } from "lib/utils";
 import { getMatchsApi, getMostInfoApi, getSummonerApi } from "pages/api/api";
 import { atom, selector } from "recoil";
 
-export const summonerNameState = atom({
+export const summonerNameState = atom<string>({
   key: "summonerNameState",
   default: "Hide on bush",
 });
 
-export const dashboardTabState = atom({
+export const dashboardTabState = atom<string>({
   key: "dashboardTabState",
   default: "전체",
 });
 
-export const openSearchState = atom({
+export const openSearchState = atom<boolean>({
   key: "openSearchState",
   default: false,
 });
-export const openResultState = atom({
+export const openResultState = atom<boolean>({
   key: "openResultState",
   default: false,
 });

@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 
 const SearchNoSSR = dynamic(() => import("./Search"), {
@@ -6,10 +7,12 @@ const SearchNoSSR = dynamic(() => import("./Search"), {
 });
 
 const Header = () => {
+  const { pathname } = useRouter();
+
   return (
     <Container>
       <Inner>
-        <SearchNoSSR />
+        <RightSection>{pathname === "/" ? null : <SearchNoSSR />}</RightSection>
       </Inner>
     </Container>
   );
@@ -28,6 +31,10 @@ const Inner = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+`;
+
+const RightSection = styled.div`
+  width: 26rem;
 `;
 
 export default Header;

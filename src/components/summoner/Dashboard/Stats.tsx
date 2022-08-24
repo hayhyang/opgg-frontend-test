@@ -8,19 +8,32 @@ import {
   returnWinColor,
 } from "lib/utils";
 
-const Stats = ({ kills, deaths, assists, wins, losses }: any) => {
+import { ISummary } from "types/types";
+
+interface ChartProps {
+  ratio: number;
+}
+
+const Stats = ({
+  kills = 0,
+  deaths = 0,
+  assists = 0,
+  wins = 0,
+  losses = 0,
+}: ISummary) => {
   const kda = getKDA(kills, deaths, assists);
   const winningRate = getWinningRate(wins, losses);
+  const games: number = wins + losses;
 
   return (
     <Container>
       <Title>
-        {wins + losses || 0}전 {wins || 0}승 {losses || 0}패
+        {games}전 {wins}승 {losses}패
       </Title>
       <ChartArea>
         <Chart ratio={100 - winningRate}>
           <WinningRate>
-            <strong>{winningRate || 0}</strong>%
+            <strong>{winningRate}</strong>%
           </WinningRate>
           <svg>
             <circle className="wins" cx="45" cy="45" r="38.5"></circle>
@@ -29,14 +42,12 @@ const Stats = ({ kills, deaths, assists, wins, losses }: any) => {
         </Chart>
         <Metadata>
           <KDA>
-            {kills || 0}&nbsp;/&nbsp;<strong>{deaths || 0}</strong>&nbsp;/&nbsp;
-            {assists || 0}
+            {kills}&nbsp;/&nbsp;<strong>{deaths}</strong>&nbsp;/&nbsp;
+            {assists}
           </KDA>
           <Ratio color={returnKDAColor(kda)}>
-            <strong>{kda || 0}</strong>:1&nbsp;
-            <Rate color={returnWinColor(winningRate)}>
-              ({winningRate || 0}%)
-            </Rate>
+            <strong>{kda}</strong>:1&nbsp;
+            <Rate color={returnWinColor(winningRate)}>({winningRate}%)</Rate>
           </Ratio>
         </Metadata>
       </ChartArea>
@@ -62,7 +73,7 @@ const Title = styled.h4`
 const ChartArea = styled.div`
   display: flex;
 `;
-const Chart = styled.div<any>`
+const Chart = styled.div<ChartProps>`
   width: 9rem;
   height: 9rem;
   position: relative;

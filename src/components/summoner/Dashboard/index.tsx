@@ -5,10 +5,12 @@ import Positions from "./Positions";
 import Champions from "./Champions";
 import Tabs from "./Tabs";
 
+import { IChampion, IPosition, ISummary } from "types/types";
+
 interface DashboardProps {
-  summary: any;
-  champions: any;
-  positions: any;
+  summary: ISummary;
+  champions: IChampion[];
+  positions: IPosition;
 }
 
 const Dashboard = ({ summary, champions, positions }: DashboardProps) => {

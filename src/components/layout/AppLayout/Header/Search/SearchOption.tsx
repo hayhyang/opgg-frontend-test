@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 import usePageOn from "hooks/usePageOn";
@@ -16,7 +16,7 @@ const SearchOption = () => {
   const [bookmark, setBookmark] = useRecoilState<any>(bookmarkState);
   const [history, setHistory] = useRecoilState<any>(historyState);
 
-  const updateStorage = (storageKey: string, value: string) => {
+  const updateStorage = (storageKey = "", value = "") => {
     if (storageKey === "bookmark") {
       let updateArr = [];
       if (bookmark.includes(value)) {
@@ -44,7 +44,7 @@ const SearchOption = () => {
 
   const [currentTab, setCurrentTab] = useState(tabItems[0]);
 
-  const handleChangeTab = (e: any, item: any) => {
+  const handleChangeTab = (e: MouseEvent, item: string) => {
     e.preventDefault();
     setCurrentTab(item);
   };

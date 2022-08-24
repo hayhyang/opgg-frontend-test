@@ -1,15 +1,18 @@
-import { useState } from "react";
 import styled from "styled-components";
-import Bookmark from "./Bookmark";
-import RecentSearch from "./History";
 
-const Tabs = ({ tabItems, handleChangeTab, currentTab }: any) => {
+interface TabsProps {
+  tabItems: string[];
+  handleChangeTab: (e: MouseEvent, item: string) => void;
+  currentTab: string;
+}
+
+const Tabs = ({ tabItems, handleChangeTab, currentTab }: TabsProps) => {
   return (
     <Container>
       {tabItems?.map((el, i) => (
         <Tab
           className={el === currentTab ? "on" : ""}
-          onClick={(e) => handleChangeTab(e, el)}
+          onClick={(e: MouseEvent) => handleChangeTab(e, el)}
           key={i}
         >
           {el}

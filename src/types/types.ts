@@ -38,26 +38,26 @@ export interface IGameInfo {
 }
 
 export interface IGameInfoStats {
-  general: General;
-  ward: IWard;
+  general?: General;
+  ward?: IWard;
 }
 
 export interface General {
-  assist: number;
-  contributionForKillRate: string;
-  cs: number;
-  csPerMin: number;
-  death: number;
-  goldEarned: number;
-  kdaString: string;
-  kill: number;
-  largestMultiKillString: string;
-  opScoreBadge: string;
-  totalDamageDealtToChampions: number;
+  assist?: number;
+  contributionForKillRate?: string;
+  cs?: number;
+  csPerMin?: number;
+  death?: number;
+  goldEarned?: number;
+  kdaString?: string;
+  kill?: number;
+  largestMultiKillString?: string;
+  opScoreBadge?: string;
+  totalDamageDealtToChampions?: number;
 }
 
 export interface IImageObj {
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 export interface ILadderRank {
@@ -78,14 +78,14 @@ export interface IMapInfo {
 }
 
 export interface IMatchDetailDTO {
-  gameIId: string;
+  gameId: string;
   teams: ITeam[];
 }
 
 export interface IMatchesDTO {
   champions: IChampion[];
   games: IGameInfo[];
-  positions: [];
+  positions: IPosition;
   summary: ISummary;
 }
 

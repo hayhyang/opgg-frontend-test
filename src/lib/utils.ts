@@ -1,16 +1,24 @@
-export const getWinningRate = (wins: number, losses: number) => {
+import { IGameInfoStats, ITierRank } from "types/types";
+
+export const getWinningRate = (wins = 0, losses = 0) => {
   return Math.round((wins / (wins + losses)) * 100);
 };
 
-export const getTier = (tierRank: any) => {
-  return `${tierRank?.tier} ${tierRank?.shortString.match(/\d+/)[0]}`;
+export const getTier = ({ tier = "", shortString = "" }: ITierRank) => {
+  return tier + shortString.match(/\d+/);
 };
 
-export const getKDA = (kills: number, assists: number, deaths: number) => {
+export const getKDA = (kills = 0, assists = 0, deaths = 0) => {
   return Number(((kills + assists) / deaths).toFixed(2));
 };
 
-export const getPositionName = (positionName: string) => {
+export const getWard = ({
+  ward: { sightWardsBought = 0, visionWardsBought = 0 },
+}: IGameInfoStats) => {
+  return sightWardsBought + visionWardsBought;
+};
+
+export const getPositionName = (positionName = "") => {
   if (positionName === "Top") return "탑";
   if (positionName === "Middle") return "미들";
   if (positionName === "Bottom") return "바텀";
@@ -18,7 +26,7 @@ export const getPositionName = (positionName: string) => {
   if (positionName === "Jungle") return "정글";
 };
 
-export const getPositionIcon = (position: string) => {
+export const getPositionIcon = (position = "") => {
   if (position === "TOP") return "/images/positions/top.svg";
   if (position === "MID") return "/images/positions/middle.svg";
   if (position === "ADC") return "/images/positions/bottom.svg";
@@ -26,11 +34,7 @@ export const getPositionIcon = (position: string) => {
   if (position === "JNG") return "/images/positions/jungle.svg";
 };
 
-export const getRoleRate = (positions: any) => {
-  return positions;
-};
-
-export const returnBadge = (badge: string) => {
+export const returnBadge = (badge = "") => {
   if (badge === "Double Kill") {
     return {
       string: "더블킬",
@@ -46,12 +50,12 @@ export const returnBadge = (badge: string) => {
   } else return null;
 };
 
-export const returnWinColor = (value: number) => {
+export const returnWinColor = (value = 0) => {
   if (value >= 60) return "#c6443e";
   else return "#555";
 };
 
-export const returnKDAColor = (kda: number) => {
+export const returnKDAColor = (kda = 0) => {
   if (kda >= 5.0) return "#e19205";
   if (kda >= 4.0) return "#1f8ecd";
   if (kda >= 3.0) return "#2daf7f";
@@ -59,14 +63,14 @@ export const returnKDAColor = (kda: number) => {
 };
 
 export const localStorageEffect =
-  (key: string) =>
+  (key = "") =>
   ({ setSelf, onSet }: any) => {
     const savedValue = localStorage.getItem(key);
     if (savedValue != null) {
       setSelf(JSON.parse(savedValue));
     }
 
-    onSet((newValue: any, _: any, isReset: any) => {
+    onSet((newValue: string[], _: any, isReset: boolean) => {
       isReset
         ? localStorage.removeItem(key)
         : localStorage.setItem(key, JSON.stringify(newValue));

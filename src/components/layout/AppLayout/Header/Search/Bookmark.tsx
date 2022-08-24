@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import { SearchItemProps } from "types/common";
+
 import Empty from "./Empty";
 import SearchItem from "./SearchItem";
 
-const Bookmark = ({ bookmark, setter, updateStorage }: any) => {
+const Bookmark = ({ bookmark, updateStorage }: SearchItemProps) => {
   return (
     <Container>
       {bookmark?.length ? (
@@ -12,7 +14,6 @@ const Bookmark = ({ bookmark, setter, updateStorage }: any) => {
             key={i}
             star={false}
             storageKey="bookmark"
-            setter={setter}
             updateStorage={updateStorage}
           />
         ))

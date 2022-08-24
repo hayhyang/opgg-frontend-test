@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ISummoner } from "types/types";
+import { ISummoner, ITierRank } from "types/types";
 
 const Profile = ({
   name,
@@ -12,7 +12,7 @@ const Profile = ({
   return (
     <Container>
       <Tags>
-        {previousTiers?.map((el: any, i: number) => (
+        {previousTiers?.map((el: ITierRank, i: number) => (
           <Tag key={i}>
             <strong>S{el?.season}</strong>
             &nbsp;

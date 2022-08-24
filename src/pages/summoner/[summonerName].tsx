@@ -8,12 +8,12 @@ import Rankings from "components/summoner/Rankings";
 import Dashboard from "components/summoner/Dashboard";
 import Games from "components/summoner/Games";
 
-import { ISummoner } from "types/types";
+import { IMatchesDTO, IMostInfoDTO, ISummoner } from "types/types";
 
 interface SummonerProps {
   summoner: ISummoner;
-  mostInfo: any;
-  matches: any;
+  mostInfo: IMostInfoDTO;
+  matches: IMatchesDTO;
 }
 
 const Summoner: NextPage<SummonerProps> = ({ summoner, mostInfo, matches }) => {

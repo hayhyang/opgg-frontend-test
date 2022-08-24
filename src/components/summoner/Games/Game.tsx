@@ -6,13 +6,19 @@ import { getMatchDetailApi } from "pages/api/api";
 
 import useHover from "hooks/useHover";
 
-import { returnBadge } from "lib/utils";
+import { getWard, returnBadge } from "lib/utils";
 import { getGameLength, getTimeStamp } from "lib/day";
 import { ellipsis } from "styles/modules";
 
 import Avatar from "components/common/Avatar";
 import WardRed from "assets/icons/ward-red.svg";
 import WardBlue from "assets/icons/ward-blue.svg";
+import { IFellowPlayer, IGameInfo, IImageObj, ITeam } from "types/types";
+
+interface BadgeProps {
+  bgColor: string;
+  borderColor: string;
+}
 
 const Game = ({
   champion,
@@ -27,7 +33,7 @@ const Game = ({
   peak,
   summonerName,
   tierRankShort,
-}: any) => {
+}: IGameInfo) => {
   const buildIconBlue = `/images/icon-buildblue-p.png`;
   const buildIconRed = `/images/icon-buildred-p.png`;
   const arrowBlue = `/images/icon-viewdetail-blue.png`;
@@ -39,12 +45,15 @@ const Game = ({
   const defaultItems = Array.from(Array(6).keys());
 
   const [hoverRef, isHovered] = useHover();
+  const ward = getWard(stats);
 
   useEffect(() => {
     async function getMatchDetailHandler() {
       const data = await getMatchDetailApi("OOPG", gameId);
+
       setTeams(data.teams);
     }
+
     getMatchDetailHandler();
   }, [gameId]);
 
@@ -56,20 +65,20 @@ const Game = ({
           <CreateDate>{getTimeStamp(createDate)}</CreateDate>
           <Division />
           <Result>{isWin ? "승리" : "패배"}</Result>
-          <GameLength>{gameLength}</GameLength>
+          <GameLength>{getGameLength(gameLength)}</GameLength>
         </Info>
         <Champions>
           <Champion>
-            <Avatar src={champion.imageUrl} size="4.6rem" />
+            <Avatar src={champion?.imageUrl} size="4.6rem" />
             <ChampionItems>
-              {spells.map((el: any, i: number) => (
+              {spells?.map((el: IImageObj, i: number) => (
                 <ChampionItem key={i}>
                   <Image src={el.imageUrl} width="22" height="22" alt="spell" />
                 </ChampionItem>
               ))}
             </ChampionItems>
             <Peaks>
-              {peak.map((el: any, i: number) => (
+              {peak?.map((el: string, i: number) => (
                 <Peak key={i}>
                   <Image src={el} width="22" height="22" alt="peak" />
                 </Peak>
@@ -97,7 +106,7 @@ const Game = ({
                   bgColor={killBadge?.bgColor}
                   borderColor={killBadge?.borderColor}
                 >
-                  {killBadge.string}
+                  {killBadge?.string}
                 </Badge>
               )}
               {scoreBadge && (
@@ -112,7 +121,7 @@ const Game = ({
           )}
         </Kda>
         <Stats>
-          <Level>레벨{champion.level}</Level>
+          <Level>레벨{champion?.level}</Level>
           <CS>
             {stats?.general?.cs} ({stats?.general?.csPerMin}) CS
           </CS>
@@ -121,12 +130,12 @@ const Game = ({
         <Items>
           <ItemList>
             <ItemImages>
-              {defaultItems.map((i: number) => {
+              {defaultItems?.map((i: number) => {
                 if (items[i] && i !== items.length - 1)
                   return (
                     <Item key={i} ref={hoverRef}>
                       <Image
-                        src={items[i].imageUrl}
+                        src={items[i].imageUrl || ""}
                         width="22"
                         height="22"
                         alt="item"
@@ -140,7 +149,7 @@ const Game = ({
             <Ward>
               <Item>
                 <Image
-                  src={items[items.length - 1].imageUrl}
+                  src={items[items.length - 1].imageUrl || ""}
                   width="22"
                   height="22"
                   alt="item"
@@ -158,16 +167,16 @@ const Game = ({
           </ItemList>
           <Control>
             <ControlIcon>{isWin ? <WardBlue /> : <WardRed />}</ControlIcon>
-            <ControlValue>제어와드 0</ControlValue>
+            <ControlValue>제어와드 {ward}</ControlValue>
           </Control>
         </Items>
         <Teams>
-          {teams.map((el: any, idx: number) => (
+          {teams.map((el: ITeam, idx: number) => (
             <Team key={idx}>
-              {el?.players?.map((e: any, i: number) => (
+              {el?.players?.map((e: IFellowPlayer, i: number) => (
                 <li key={i}>
                   <Image
-                    src={champion?.imageUrl}
+                    src={champion?.imageUrl || ""}
                     width="16"
                     height="16"
                     alt={e.summonerName}
@@ -307,7 +316,7 @@ const Badges = styled.div`
   align-items: center;
   gap: 4px;
 `;
-const Badge = styled.div<any>`
+const Badge = styled.div<BadgeProps>`
   padding: 3px 5px;
   border-radius: 15px;
   border: solid 1px;
@@ -423,7 +432,7 @@ const ChampionName = styled.span`
   }
 `;
 
-const Container = styled.div<any>`
+const Container = styled.div<IGameInfo>`
   display: flex;
   height: 9.6rem;
   &:not(:last-child) {

@@ -21,8 +21,8 @@ const Champion = ({
   assists,
   empty,
 }: ChampionProps) => {
-  const winninfRate = getWinningRate(wins || 0, losses || 0);
-  const kda = getKDA(kills || 0, assists || 0, deaths || 0);
+  const winninfRate = getWinningRate(wins, losses);
+  const kda = getKDA(kills, assists, deaths);
 
   return (
     <Container>
