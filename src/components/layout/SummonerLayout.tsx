@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
+import { IMatchesDTO } from "types/types";
 
 interface SummonerLayoutProps {
   profile?: ReactNode;

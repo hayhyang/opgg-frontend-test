@@ -5,17 +5,18 @@ import { useRecoilValue } from "recoil";
 import Game from "./Game";
 
 import { dashboardTabState } from "../../../recoil/state";
+import { IGameInfo } from "types/types";
 
-const MatchesGames = ({ games }: any) => {
+const Games = ({ games }: { games: IGameInfo[] }) => {
   const dashboardTab = useRecoilValue(dashboardTabState);
 
-  const [gameList, setGameList] = useState<any>([]);
+  const [gameList, setGameList] = useState<IGameInfo[]>([]);
 
   useEffect(() => {
     setGameList(games);
   }, [games]);
 
-  useEffect(() => {
+  const returnGames = () => {
     if (dashboardTab === "전체") setGameList(games);
     if (dashboardTab === "솔로게임")
       setGameList([...games].filter((el: any) => el.gameType === "솔랭"));
@@ -23,6 +24,10 @@ const MatchesGames = ({ games }: any) => {
       setGameList(
         [...games].filter((el: any) => el.gameType === "자유 5:5 랭크")
       );
+  };
+
+  useEffect(() => {
+    returnGames();
   }, [dashboardTab]);
 
   return (
@@ -38,4 +43,4 @@ const Container = styled.div`
   margin-top: 1.6rem;
 `;
 
-export default memo(MatchesGames);
+export default memo(Games);

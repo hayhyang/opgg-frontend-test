@@ -19,22 +19,22 @@ export interface IFellowPlayer {
 }
 
 export interface IGameInfo {
-  champion: IChampion;
-  createDate: number;
-  gameId: string;
-  gameLength: number;
-  gameType: string;
-  isWin: boolean;
-  items: IImageObj[];
-  mapInfo: IMapInfo;
-  mmr: number;
-  needRenew: boolean;
-  peak: string[];
-  spells: IImageObj[];
-  stats: IGameInfoStats;
-  summonerId: string;
-  summonerName: string;
-  tierRankShort: string;
+  createDate?: number;
+  champion?: IChampion;
+  gameId?: string;
+  gameLength?: number;
+  gameType?: string;
+  isWin?: boolean;
+  items?: IImageObj[];
+  mapInfo?: IMapInfo;
+  mmr?: number;
+  needRenew?: boolean;
+  peak?: string[];
+  spells?: IImageObj[];
+  stats?: IGameInfoStats;
+  summonerId?: string;
+  summonerName?: string;
+  tierRankShort?: string;
 }
 
 export interface IGameInfoStats {
@@ -90,51 +90,51 @@ export interface IMatchesDTO {
 }
 
 export interface IMostChampion {
-  assists: number;
-  cs: number;
-  deaths: number;
-  games: number;
-  id: number;
-  imageUrl: string;
-  key: string;
-  kills: number;
-  losses: number;
-  name: string;
-  rank: number;
-  wins: number;
+  assists?: number;
+  cs?: number;
+  deaths?: number;
+  games?: number;
+  id?: number;
+  imageUrl?: string;
+  key?: string;
+  kills?: number;
+  losses?: number;
+  name?: string;
+  rank?: number;
+  wins?: number;
 }
 
 export interface IMostInfoDTO {
-  champions: IMostChampion[];
-  recentWinRate: IChampionWinRate[];
+  champions?: IMostChampion[];
+  recentWinRate?: IChampionWinRate[];
 }
 
 export interface IPosition {
-  games: number;
-  losses: number;
-  position: string;
-  positionName: string;
-  wins: number;
+  games?: number;
+  losses?: number;
+  position?: string;
+  positionName?: string;
+  wins?: number;
 }
 
 export interface ISummary {
-  assists: number;
-  deaths: number;
-  kills: number;
-  losses: number;
-  wins: number;
+  assists?: number;
+  deaths?: number;
+  kills?: number;
+  losses?: number;
+  wins?: number;
 }
 
 export interface ISummoner {
-  ladderRank: ILadderRank;
-  leagues: ILeague[];
-  level: number;
-  name: string;
-  previousTiers: ITierRank[];
-  profileBackgroundImageUrl: string;
-  profileBorderImageUrl: string;
-  profileImageUrl: string;
-  url: string;
+  ladderRank?: ILadderRank;
+  leagues?: ILeague[];
+  level?: number;
+  name?: string;
+  previousTiers?: ITierRank[];
+  profileBackgroundImageUrl?: string;
+  profileBorderImageUrl?: string;
+  profileImageUrl?: string;
+  url?: string;
 }
 
 export interface ISummonerDTO {
@@ -142,24 +142,24 @@ export interface ISummonerDTO {
 }
 
 export interface ITeam {
-  players: IFellowPlayer[];
-  teamId: number;
+  players?: IFellowPlayer[];
+  teamId?: number;
 }
 
 export interface ITierRank {
-  division: string;
-  imageUrl: string;
-  lp: number;
-  name: string;
-  season: number;
-  shortString: string;
-  string: string;
-  tier: string;
-  tierDivision: string;
-  tierRankPoint: number;
+  division?: string;
+  imageUrl?: string;
+  lp?: number;
+  name?: string;
+  season?: number;
+  shortString?: string;
+  string?: string;
+  tier?: string;
+  tierDivision?: string;
+  tierRankPoint?: number;
 }
 
 export interface IWard {
-  sightWardsBought: number;
-  visionWardsBought: number;
+  sightWardsBought?: number;
+  visionWardsBought?: number;
 }

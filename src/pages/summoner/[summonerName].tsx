@@ -8,7 +8,15 @@ import Rankings from "components/summoner/Rankings";
 import Dashboard from "components/summoner/Dashboard";
 import Games from "components/summoner/Games";
 
-const Summoner: NextPage = ({ summoner, mostInfo, matches }: any) => {
+import { ISummoner } from "types/types";
+
+interface SummonerProps {
+  summoner: ISummoner;
+  mostInfo: any;
+  matches: any;
+}
+
+const Summoner: NextPage<SummonerProps> = ({ summoner, mostInfo, matches }) => {
   return (
     <SummonerLayout
       profile={<Profile {...summoner} />}

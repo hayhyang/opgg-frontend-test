@@ -1,7 +1,12 @@
 import { memo } from "react";
 import styled from "styled-components";
 
-import { getKDA, getWinningRate } from "lib/utils";
+import {
+  getKDA,
+  getWinningRate,
+  returnKDAColor,
+  returnWinColor,
+} from "lib/utils";
 
 const Stats = ({ kills, deaths, assists, wins, losses }: any) => {
   const kda = getKDA(kills, deaths, assists);
@@ -27,8 +32,11 @@ const Stats = ({ kills, deaths, assists, wins, losses }: any) => {
             {kills || 0}&nbsp;/&nbsp;<strong>{deaths || 0}</strong>&nbsp;/&nbsp;
             {assists || 0}
           </KDA>
-          <Ratio>
-            <strong>{kda || 0}</strong>:1 <Rate>({winningRate || 0}%)</Rate>
+          <Ratio color={returnKDAColor(kda)}>
+            <strong>{kda || 0}</strong>:1&nbsp;
+            <Rate color={returnWinColor(winningRate)}>
+              ({winningRate || 0}%)
+            </Rate>
           </Ratio>
         </Metadata>
       </ChartArea>
@@ -88,8 +96,8 @@ const WinningRate = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 14px;
-  color: #555;
   font-family: Helvetica;
+  color: #555555;
 `;
 const Metadata = styled.div`
   margin-left: 3.5rem;
@@ -113,14 +121,13 @@ const KDA = styled.div`
 const Ratio = styled.div`
   font-family: Helvetica;
   font-size: 1.6rem;
-  color: #c6443e;
   line-height: 1.9rem;
-  color: #2daf7f;
   display: flex;
   align-items: center;
+  color: ${({ color }) => color};
 `;
 const Rate = styled.div`
-  color: #c6443e;
+  color: ${({ color }) => color};
   font: inherit;
 `;
 

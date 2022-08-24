@@ -1,15 +1,20 @@
 import { memo, useEffect, useState } from "react";
 import styled from "styled-components";
+import Image from "next/image";
 
 import { getMatchDetailApi } from "pages/api/api";
 
+import useHover from "hooks/useHover";
+
 import { returnBadge } from "lib/utils";
+import { getGameLength, getTimeStamp } from "lib/day";
 import { ellipsis } from "styles/modules";
 
 import Avatar from "components/common/Avatar";
-import Image from "next/image";
+import WardRed from "assets/icons/ward-red.svg";
+import WardBlue from "assets/icons/ward-blue.svg";
 
-const MatchesGame = ({
+const Game = ({
   champion,
   gameType,
   isWin,
@@ -31,6 +36,9 @@ const MatchesGame = ({
   const [teams, setTeams] = useState([]);
   const killBadge = returnBadge(stats?.general?.largestMultiKillString);
   const scoreBadge = returnBadge(stats?.general?.opScoreBadge);
+  const defaultItems = Array.from(Array(6).keys());
+
+  const [hoverRef, isHovered] = useHover();
 
   useEffect(() => {
     async function getMatchDetailHandler() {
@@ -43,13 +51,13 @@ const MatchesGame = ({
   return (
     <Container isWin={isWin}>
       <Metadata>
-        <Game>
+        <Info>
           <GameType>{gameType}</GameType>
-          <CreateDate>{createDate}</CreateDate>
+          <CreateDate>{getTimeStamp(createDate)}</CreateDate>
           <Division />
           <Result>{isWin ? "승리" : "패배"}</Result>
           <GameLength>{gameLength}</GameLength>
-        </Game>
+        </Info>
         <Champions>
           <Champion>
             <Avatar src={champion.imageUrl} size="4.6rem" />
@@ -66,7 +74,6 @@ const MatchesGame = ({
                   <Image src={el} width="22" height="22" alt="peak" />
                 </Peak>
               ))}
-              {/* <Rune></Rune> */}
             </Peaks>
           </Champion>
           <Name>레오나</Name>
@@ -114,15 +121,30 @@ const MatchesGame = ({
         <Items>
           <ItemList>
             <ItemImages>
-              {items.map((el: any, i: number) => (
-                <Item key={i}>
-                  <Image src={el.imageUrl} width="22" height="22" alt="item" />
-                </Item>
-              ))}
+              {defaultItems.map((i: number) => {
+                if (items[i] && i !== items.length - 1)
+                  return (
+                    <Item key={i} ref={hoverRef}>
+                      <Image
+                        src={items[i].imageUrl}
+                        width="22"
+                        height="22"
+                        alt="item"
+                      />
+                      {isHovered && "mouse over"}
+                    </Item>
+                  );
+                else return <Item key={i} />;
+              })}
             </ItemImages>
             <Ward>
               <Item>
-                <Image src="" width="22" height="22" alt="item" />
+                <Image
+                  src={items[items.length - 1].imageUrl}
+                  width="22"
+                  height="22"
+                  alt="item"
+                />
               </Item>
               <button>
                 <Image
@@ -135,7 +157,7 @@ const MatchesGame = ({
             </Ward>
           </ItemList>
           <Control>
-            <ControlIcon>{}</ControlIcon>
+            <ControlIcon>{isWin ? <WardBlue /> : <WardRed />}</ControlIcon>
             <ControlValue>제어와드 0</ControlValue>
           </Control>
         </Items>
@@ -190,7 +212,7 @@ const More = styled.button`
   justify-content: center;
 `;
 
-const Game = styled.div`
+const Info = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -426,4 +448,4 @@ const Container = styled.div<any>`
     background-color: ${({ isWin }) => (isWin ? "#7aa5c3" : "#cb9e9a")};
   }
 `;
-export default memo(MatchesGame);
+export default memo(Game);

@@ -2,8 +2,14 @@ import { memo } from "react";
 import styled from "styled-components";
 
 import Avatar from "components/common/Avatar";
-import { getKDA, getWinningRate } from "lib/utils";
+import { getKDA, getWinningRate, returnKDAColor } from "lib/utils";
 import { IMostChampion } from "types/types";
+
+import DefaultAvatar from "assets/icons/group.svg";
+
+interface ChampionProps extends IMostChampion {
+  empty?: boolean;
+}
 
 const Champion = ({
   imageUrl,
@@ -13,28 +19,38 @@ const Champion = ({
   kills,
   deaths,
   assists,
-}: IMostChampion) => {
-  const winninfRate = getWinningRate(wins, losses);
-  const kda = getKDA(kills, assists, deaths);
+  empty,
+}: ChampionProps) => {
+  const winninfRate = getWinningRate(wins || 0, losses || 0);
+  const kda = getKDA(kills || 0, assists || 0, deaths || 0);
 
   return (
     <Container>
-      <Avatar src={imageUrl} alt={name} size="3.4rem" />
-      <Metadata>
-        <Name>{name}</Name>
-        <Statistics>
-          <WinningRate color={winninfRate > 60 ? "#c6443e" : "#555555"}>
-            <Value>
-              <strong>{winninfRate}</strong>%
-            </Value>
-            &nbsp;({wins}
-            승&nbsp;{losses}패)
-          </WinningRate>
-          <KDA color={kda > 6.0 ? "#e19205" : "#555555"}>
-            <strong>{kda}</strong> 평점
-          </KDA>
-        </Statistics>
-      </Metadata>
+      {imageUrl ? (
+        <Avatar src={imageUrl} alt={name} size="3.4rem" />
+      ) : (
+        <DefaultAvatar />
+      )}
+
+      {empty ? (
+        <EmptyMessage>챔피언 정보가 없습니다.</EmptyMessage>
+      ) : (
+        <Metadata>
+          <Name>{name}</Name>
+          <Statistics>
+            <WinningRate color={winninfRate > 60 ? "#c6443e" : "#555555"}>
+              <Value>
+                <strong>{winninfRate}</strong>%
+              </Value>
+              &nbsp;({wins}
+              승&nbsp;{losses}패)
+            </WinningRate>
+            <KDA color={returnKDAColor(kda)}>
+              <strong>{kda}</strong> 평점
+            </KDA>
+          </Statistics>
+        </Metadata>
+      )}
     </Container>
   );
 };
@@ -53,7 +69,6 @@ const Metadata = styled.div`
 const Name = styled.div`
   color: #333;
   font-size: 1.4rem;
-  font-weight: bold;
   line-height: 1.6rem;
   margin-bottom: 0.3rem;
 `;
@@ -84,6 +99,15 @@ const WinningRate = styled.div`
     color: ${({ color }) => color};
   }
 `;
-const KDA = styled.div``;
+const KDA = styled.div`
+  color: ${({ color }) => color};
+`;
+const EmptyMessage = styled.div`  
+  height: 12px;
+  font-family: NanumBarunGothicOTF;
+  font-size: 11px;
+  color: #999;
+  margin-left: 8px;
+}`;
 
 export default memo(Champion);

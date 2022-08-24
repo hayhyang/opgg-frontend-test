@@ -1,5 +1,6 @@
 import { memo } from "react";
 import styled from "styled-components";
+
 import Position from "./Position";
 
 const Positions = ({ positions }: any) => {

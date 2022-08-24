@@ -6,7 +6,7 @@ import { openSearchState } from "recoil/state";
 
 import SearchOption from "./SearchOption";
 
-import Logo from "assets/icons/common/logo-gg.svg";
+import Logo from "assets/icons/logo-gg.svg";
 import { setLocalStorage } from "lib/utils";
 import SearchResult from "./SearchResult";
 
@@ -18,8 +18,8 @@ const Search = () => {
     query: { summonerName },
   } = router;
 
-  const handleFocusInput = () => {
-    setOpenSearchState((v) => !v);
+  const handleClickInput = () => {
+    setOpenSearchState(false);
   };
 
   const handleChangeValue = ({ target: { value } }: any) => {
@@ -45,7 +45,7 @@ const Search = () => {
         <SearchBox>
           <Input
             placeholder="소환사명,챔피언…"
-            onClick={handleFocusInput}
+            onClick={handleClickInput}
             value={searchValue}
             onChange={handleChangeValue}
           />

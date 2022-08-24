@@ -1,5 +1,11 @@
 import { getPositionIcon, getPositionName, getWinningRate } from "lib/utils";
+import Image from "next/image";
 import styled from "styled-components";
+import { IPosition } from "types/types";
+
+interface PositionProps extends IPosition {
+  getRoleRate?: any;
+}
 
 const Position = ({
   position,
@@ -8,18 +14,25 @@ const Position = ({
   wins,
   losses,
   getRoleRate,
-}: any) => {
-  const roleRate = getRoleRate(games);
+}: PositionProps) => {
+  const roleRate = getRoleRate(games || 0);
 
   return (
     <Container>
-      {/* <Icon>{getPositionIcon(position)}</Icon> */}
+      <Icon>
+        <Image
+          src={getPositionIcon(position || "") || ""}
+          alt="포지션"
+          width="28"
+          height="28"
+        />
+      </Icon>
       <Metadata>
-        <Name>{getPositionName(positionName)}</Name>
+        <Name>{getPositionName(positionName || "")}</Name>
         <Rates>
-          <RoleRate>{roleRate}%</RoleRate>
+          <RoleRate>{roleRate || 0}%</RoleRate>
           <WinningRate>
-            승률 <strong>{getWinningRate(wins, losses) || 0}</strong>%
+            승률 <strong>{getWinningRate(wins || 0, losses || 0)}</strong>%
           </WinningRate>
         </Rates>
       </Metadata>

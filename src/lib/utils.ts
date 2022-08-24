@@ -1,9 +1,3 @@
-import PositionTop from "assets/icons/positions/top.svg";
-import PositionBot from "assets/icons/positions/bottom.svg";
-import PositionMid from "assets/icons/positions/middle.svg";
-import PositionJng from "assets/icons/positions/jungle.svg";
-import PositionSup from "assets/icons/positions/support.svg";
-
 export const getWinningRate = (wins: number, losses: number) => {
   return Math.round((wins / (wins + losses)) * 100);
 };
@@ -25,11 +19,11 @@ export const getPositionName = (positionName: string) => {
 };
 
 export const getPositionIcon = (position: string) => {
-  if (position === "TOP") return PositionTop;
-  if (position === "MID") return PositionMid;
-  if (position === "ADC") return PositionBot;
-  if (position === "SUP") return PositionSup;
-  if (position === "JNG") return PositionJng;
+  if (position === "TOP") return "/images/positions/top.svg";
+  if (position === "MID") return "/images/positions/middle.svg";
+  if (position === "ADC") return "/images/positions/bottom.svg";
+  if (position === "SUP") return "/images/positions/support.svg";
+  if (position === "JNG") return "/images/positions/jungle.svg";
 };
 
 export const getRoleRate = (positions: any) => {
@@ -39,7 +33,7 @@ export const getRoleRate = (positions: any) => {
 export const returnBadge = (badge: string) => {
   if (badge === "Double Kill") {
     return {
-      string: "더블 킬",
+      string: "더블킬",
       bgColor: "#ec4f48",
       borderColor: "#bf3b36",
     };
@@ -69,4 +63,16 @@ export const setLocalStorage = (key: string, value: string) => {
   }
   console.log("updateArr", updateArr);
   window.localStorage.setItem(key, JSON.stringify(updateArr));
+};
+
+export const returnWinColor = (value: number) => {
+  if (value >= 60) return "#c6443e";
+  else return "#555";
+};
+
+export const returnKDAColor = (kda: number) => {
+  if (kda >= 5.0) return "#e19205";
+  if (kda >= 4.0) return "#1f8ecd";
+  if (kda >= 3.0) return "#2daf7f";
+  if (kda < 3.0) return "#5e5e5e";
 };

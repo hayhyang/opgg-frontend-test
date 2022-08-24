@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
-import { getKDA, getWinningRate } from "lib/utils";
+import {
+  getKDA,
+  getWinningRate,
+  returnKDAColor,
+  returnWinColor,
+} from "lib/utils";
 import { ellipsis } from "styles/modules";
 
 import Avatar from "components/common/Avatar";
@@ -16,7 +21,7 @@ const Champion = ({
   deaths,
   assists,
 }: any) => {
-  const winninfRate = getWinningRate(wins, losses);
+  const winningRate = getWinningRate(wins, losses);
   const kda = getKDA(kills, deaths, assists);
 
   return (
@@ -27,13 +32,15 @@ const Champion = ({
         <Cs>CS {cs}</Cs>
       </Info>
       <Kda>
-        <KdaString>{kda}:1 평점</KdaString>
+        <KdaString color={returnKDAColor(kda)}>{kda}:1 평점</KdaString>
         <KdaValue>
           {kills} / {deaths} / {assists}
         </KdaValue>
       </Kda>
       <Played>
-        <WinningRate>{winninfRate}%</WinningRate>
+        <WinningRate color={returnWinColor(winningRate)}>
+          {winningRate}%
+        </WinningRate>
         <PlayCount>{games} 게임</PlayCount>
       </Played>
     </Container>
@@ -67,8 +74,11 @@ const KdaString = styled.div`
   font-weight: bold;
   color: #5e5e5e;
   margin-bottom: 3px;
+  color: ${({ color }) => color};
 `;
-const KdaValue = styled.div``;
+const KdaValue = styled.div`
+  color: #879292;
+`;
 
 const Name = styled.h6`
   color: #5e5e5e;
@@ -98,6 +108,7 @@ const WinningRate = styled.div`
   font-weight: bold;
   color: #5e5e5e;
   margin-bottom: 3px;
+  color: ${({ color }) => color};
 `;
 const PlayCount = styled.div`
   line-height: 13px;
