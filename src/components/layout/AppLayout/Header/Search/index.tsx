@@ -18,7 +18,7 @@ const Search = () => {
   const [openSearch, setOpenSearchState] = useRecoilState(openSearchState);
   const [searchValue, setSearchValue] = useState("");
   const [history, setHistory] = useRecoilState<any>(historyState);
-  const inputRef = useRef();
+  const targetRef = useRef<any>();
   const router = useRouter();
   const {
     query: { summonerName },
@@ -75,12 +75,25 @@ const Search = () => {
     getSummoner();
   }, [searchValue]);
 
+  const handleClose = (e: any) => {
+    if (targetRef?.current?.contains(e.target)) {
+      return;
+    }
+    setOpenSearchState(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClose);
+    return () => {
+      document.removeEventListener("mousedown", handleClose);
+    };
+  }, []);
+
   return (
     <Container>
       <form onSubmit={handleSubmit}>
         <SearchBox>
           <Input
-            ref={inputRef}
             placeholder="소환사명,챔피언…"
             onClick={handleClickInput}
             value={searchValue}
@@ -92,12 +105,15 @@ const Search = () => {
           </Button>
         </SearchBox>
       </form>
-      {openSearch &&
-        (!searchValue ? (
-          <SearchOption />
-        ) : (
-          <SearchResult summoner={summoner} />
-        ))}
+      {openSearch && (
+        <div ref={targetRef}>
+          {!searchValue ? (
+            <SearchOption />
+          ) : (
+            <SearchResult summoner={summoner} />
+          )}
+        </div>
+      )}
     </Container>
   );
 };
