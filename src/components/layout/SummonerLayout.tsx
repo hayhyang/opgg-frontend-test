@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { IMatchesDTO } from "types/types";
 
 interface SummonerLayoutProps {
+  loading?: boolean;
   profile?: ReactNode;
   leagues?: ReactNode;
   rankings?: ReactNode;
@@ -11,6 +12,7 @@ interface SummonerLayoutProps {
 }
 
 const SummonerLayout = ({
+  loading,
   profile,
   leagues,
   rankings,

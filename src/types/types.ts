@@ -163,3 +163,23 @@ export interface IWard {
   sightWardsBought?: number;
   visionWardsBought?: number;
 }
+
+export interface IItem {
+  colloq: string;
+  description: string;
+  gold: { base: number; purchasable: boolean; total: number; sell: number };
+  image: {
+    full: string;
+    sprite: string;
+    group: string;
+    x: number;
+    y: number;
+    w: number;
+  };
+  into: string[];
+  maps: { 11: boolean; 12: boolean; 21: boolean; 22: boolean };
+  name: string;
+  plaintext: string;
+  stats: { FlatMovementSpeedMod: 25 };
+  tags: string[];
+}

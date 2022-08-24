@@ -1,5 +1,10 @@
 import { localStorageEffect } from "lib/utils";
-import { getMatchsApi, getMostInfoApi, getSummonerApi } from "pages/api/api";
+import {
+  getItemsApi,
+  getMatchsApi,
+  getMostInfoApi,
+  getSummonerApi,
+} from "pages/api/api";
 import { atom, selector } from "recoil";
 
 export const summonerNameState = atom<string>({
@@ -53,6 +58,18 @@ export const getMatchs = selector({
     const summonerName = get(summonerNameState);
     try {
       const response = await getMatchsApi(summonerName);
+      return response;
+    } catch (err) {
+      throw Error("잘못된 요청입니다.");
+    }
+  },
+});
+
+export const getItems = selector({
+  key: "get/items",
+  get: async () => {
+    try {
+      const response = await getItemsApi();
       return response;
     } catch (err) {
       throw Error("잘못된 요청입니다.");

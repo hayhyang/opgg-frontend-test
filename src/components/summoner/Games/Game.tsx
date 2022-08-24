@@ -6,14 +6,16 @@ import { getMatchDetailApi } from "pages/api/api";
 
 import useHover from "hooks/useHover";
 
-import { getWard, returnBadge } from "lib/utils";
+import { getItem, getWard, returnBadge } from "lib/utils";
 import { getGameLength, getTimeStamp } from "lib/day";
 import { ellipsis } from "styles/modules";
 
 import Avatar from "components/common/Avatar";
 import WardRed from "assets/icons/ward-red.svg";
 import WardBlue from "assets/icons/ward-blue.svg";
-import { IFellowPlayer, IGameInfo, IImageObj, ITeam } from "types/types";
+import { IFellowPlayer, IGameInfo, IImageObj, IItem, ITeam } from "types/types";
+import { useRecoilValue } from "recoil";
+import { getItems } from "recoil/state";
 
 interface BadgeProps {
   bgColor: string;
@@ -44,13 +46,23 @@ const Game = ({
   const scoreBadge = returnBadge(stats?.general?.opScoreBadge);
   const defaultItems = Array.from(Array(6).keys());
 
-  const [hoverRef, isHovered] = useHover();
   const ward = getWard(stats);
+
+  const { data: itemData } = useRecoilValue(getItems);
+  console.log("itemData", itemData);
+  console.log("items", items);
+
+  const getItem = (imageUrl: string) => {
+    const id = Number(imageUrl.split("/").pop()?.split(".")[0]);
+    console.log("itemData", itemData[id]);
+    const item = itemData[id];
+
+    return item;
+  };
 
   useEffect(() => {
     async function getMatchDetailHandler() {
       const data = await getMatchDetailApi("OOPG", gameId);
-
       setTeams(data.teams);
     }
 
@@ -133,21 +145,69 @@ const Game = ({
               {defaultItems?.map((i: number) => {
                 if (items[i] && i !== items.length - 1)
                   return (
-                    <Item key={i} ref={hoverRef}>
-                      <Image
-                        src={items[i].imageUrl || ""}
-                        width="22"
-                        height="22"
-                        alt="item"
-                      />
-                      {isHovered && "mouse over"}
+                    <Item key={i}>
+                      <Tooltip width="227px">
+                        <span>
+                          <TooltipName>
+                            {getItem(items[i].imageUrl).name}
+                          </TooltipName>
+                          <TooltipDescription
+                            dangerouslySetInnerHTML={{
+                              __html: getItem(items[i].imageUrl).description,
+                            }}
+                          />
+                          <br />
+                          <TooltipPrice>
+                            <span>가격:&nbsp;</span>
+                            <span className="yellow">
+                              {getItem(items[i].imageUrl).gold.total}&nbsp;(
+                              {getItem(items[i].imageUrl).gold.base})
+                            </span>
+                          </TooltipPrice>
+                        </span>
+                      </Tooltip>
+                      <ItemImage>
+                        <Image
+                          src={items[i].imageUrl || ""}
+                          width="22"
+                          height="22"
+                          alt="item"
+                        />
+                      </ItemImage>
                     </Item>
                   );
-                else return <Item key={i} />;
+                else
+                  return (
+                    <Item key={i}>
+                      <ItemImage />
+                    </Item>
+                  );
               })}
             </ItemImages>
             <Ward>
               <Item>
+                <Tooltip width="227px">
+                  <span>
+                    <TooltipName>
+                      {getItem(items[items.length - 1].imageUrl).name}
+                    </TooltipName>
+                    <TooltipDescription
+                      dangerouslySetInnerHTML={{
+                        __html: getItem(items[items.length - 1].imageUrl)
+                          .description,
+                      }}
+                    />
+                    <br />
+                    <TooltipPrice>
+                      <span>가격:&nbsp;</span>
+                      <span className="yellow">
+                        {getItem(items[items.length - 1].imageUrl).gold.total}
+                        &nbsp;(
+                        {getItem(items[items.length - 1].imageUrl).gold.base})
+                      </span>
+                    </TooltipPrice>
+                  </span>
+                </Tooltip>
                 <Image
                   src={items[items.length - 1].imageUrl || ""}
                   width="22"
@@ -156,12 +216,17 @@ const Game = ({
                 />
               </Item>
               <button>
-                <Image
-                  src={isWin ? buildIconBlue : buildIconRed}
-                  width="22"
-                  height="22"
-                  alt="ward"
-                />
+                <Item>
+                  <Tooltip width="40px">
+                    <span>빌드</span>
+                  </Tooltip>
+                  <Image
+                    src={isWin ? buildIconBlue : buildIconRed}
+                    width="22"
+                    height="22"
+                    alt="ward"
+                  />
+                </Item>
               </button>
             </Ward>
           </ItemList>
@@ -370,7 +435,72 @@ const ItemImages = styled.div`
   gap: 2px;
   width: 72px;
 `;
+
+const Tooltip = styled.div<any>`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  font-size: 11px;
+  line-height: 1.36;
+  color: #fff;
+  width: ${({ width }) => width};
+  opacity: 0;
+  visibility: hidden;
+  bottom: 20px;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 100;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  & > span {
+    padding: 10px;
+    background-color: #222727;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    width: 0px;
+    height: 0px;
+    border-top: 8px solid #222727;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+  }
+`;
+const TooltipName = styled.span`
+  color: rgb(0, 207, 188);
+`;
+const TooltipDescription = styled.span``;
+const TooltipPrice = styled.span`
+  span {
+    &.yellow {
+      color: rgb(255, 198, 89);
+    }
+  }
+`;
 const Item = styled.div`
+  position: relative;
+  &:hover {
+    ${Tooltip} {
+      opacity: 1;
+      visibility: visible;
+      bottom: 30px;
+    }
+  }
+`;
+
+const ItemImage = styled.div`
   width: 22px;
   height: 22px;
   border-radius: 2px;
@@ -453,7 +583,7 @@ const Container = styled.div<IGameInfo>`
   ${Division} {
     background-color: ${({ isWin }) => (isWin ? "#94b9d6" : "#d0a6a5")};
   }
-  ${Item} {
+  ${ItemImage} {
     background-color: ${({ isWin }) => (isWin ? "#7aa5c3" : "#cb9e9a")};
   }
 `;

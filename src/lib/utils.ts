@@ -1,4 +1,6 @@
-import { IGameInfoStats, ITierRank } from "types/types";
+import { useRecoilValue } from "recoil";
+import { getItems } from "recoil/state";
+import { IGameInfoStats, IItem, ITierRank } from "types/types";
 
 export const getWinningRate = (wins = 0, losses = 0) => {
   return Math.round((wins / (wins + losses)) * 100);
